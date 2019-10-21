@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<div th:fragment="menu">
+      <script th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
+	<!-- Left side column. contains the sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img th:src="@{/img/user2-160x160.jpg}" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>Alexander Pierce</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <!-- search form -->
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+          <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree" id="sidebar-menu">
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+
+   "<a href="#">
+      <i class="fa fa-shopping-cart"></i>
+      <span>compras</span>
+      <span class="pull-right-container"></span>
+    </a>
+      <ul class="treeview-menu">
+        <li>
+          <a href="/mercaderias" id="products">Mercaderías
+            <i class="fa fa-circle-o"></i>
+          </a>
+        </li>
+      </ul>
+      <ul class="treeview-menu">
+        <li>
+          <a href="/proveedores" id="providers">Proveedores
+            <i class="fa fa-circle-o"></i>
+          </a>
+        </li>
+      </ul><ul class="treeview-menu">
+      <li><a href="/cotizaciones" id="cotizaciones">Cotizaciones<i class="fa fa-circle-o"></i></a></li>
+    </ul>
+      <ul class="treeview-menu"><li><a href="/com-not-remision" id="com-not-remision">Nota de remisiones<i class="fa fa-circle-o"></i></a></li></ul><ul class="treeview-menu"><li><a href="/com-not-credito" id="com-not-credito">Nota de crédito<i class="fa fa-circle-o"></i></a></li></ul><ul class="treeview-menu"><li><a href="/com-not-debito" id="com-not-debito">Nota de débito<i class="fa fa-circle-o"></i></a></li></ul><ul class="treeview-menu"><li><a href="/com-gen-lib-compras" id="com-gen-lib-compras">Generar Libro de compras<i class="fa fa-circle-o"></i></a></li></ul>"
+
+      <script th:src="@{/js/menu/menu.js}"></script>
+
+	</div>
+
+
+
+
+</body>
+</html>
