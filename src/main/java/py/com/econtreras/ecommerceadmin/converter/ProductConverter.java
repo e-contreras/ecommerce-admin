@@ -11,6 +11,7 @@ public class ProductConverter {
 
     public ProductRequest build(Product entity){
         ProductRequest request = new ProductRequest();
+        request.setBarCode(entity.getCode());
         return request;
     }
 

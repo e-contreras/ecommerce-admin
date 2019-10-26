@@ -2085,7 +2085,7 @@ QUnit.dump = ( function() {
 					}
 
 					// Some properties are not always enumerable on Error objects.
-					nonEnumerableProperties = [ "message", "name" ];
+					nonEnumerableProperties = [ "templates.properties.message", "name" ];
 					for ( i in nonEnumerableProperties ) {
 						key = nonEnumerableProperties[ i ];
 						if ( key in map && inArray( key, keys ) < 0 ) {

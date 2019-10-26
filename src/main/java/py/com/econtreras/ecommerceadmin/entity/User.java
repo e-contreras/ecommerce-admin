@@ -75,5 +75,8 @@ public class User implements Serializable {
     private User modificationUser;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "wareHousePersonal")
     private List<WorkOrder> ordTrabajosList;
+    @Basic(optional = false)
+    @Column(name = "int_fallidos", nullable = false, length = 45)
+    private Integer loginFailed;
 
 }

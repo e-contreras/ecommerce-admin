@@ -1,13 +1,12 @@
 server:
     port: 8081
 spring:
-  thymeleaf:
-    cache: false
   jpa:
     open-in-view: false
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQLDialect 
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
   datasource:
     url: jdbc:mysql://localhost:3306/econtreras?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: econtreras_user
@@ -21,9 +20,13 @@ spring:
       file-size-threshold: 2KB
       max-request-size: 215MB
       location: ${java.io.tmpdir}
+  thymeleaf:
+    cache: false
 file:
     upload-dir: /home/enrique/uploads
 api:
   messages:
     already-exist: El departamento que intenta agregar ya existe!
     internal-server-error: Ocurrió un error inesperado
+
+userTryLoginLimit: 1
