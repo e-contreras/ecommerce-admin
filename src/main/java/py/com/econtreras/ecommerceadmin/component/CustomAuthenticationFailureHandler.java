@@ -1,18 +1,14 @@
 package py.com.econtreras.ecommerceadmin.component;
 
-import org.omg.PortableServer.REQUEST_PROCESSING_POLICY_ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import py.com.econtreras.api.beans.UserBean;
-import py.com.econtreras.ecommerceadmin.service.UserService;
 import py.com.econtreras.ecommerceadmin.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
@@ -27,6 +23,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     private String userTryLoginLimit;
 
     private static final String USER_BLOCK = "Usuario bloqueado";
+    private static final String INVALID_USER_OR_PASSWORD = "Usuario o contraseña inválida";
 
     @Autowired
     @Qualifier("userService")
@@ -43,14 +40,14 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
                 if(actualUserLoginFailed >= Integer.parseInt(userTryLoginLimit)){
                     if(user.getEnabled().equals(new Short("1")))
                         userService.blockUser(user.getId());
-                    request.setAttribute("error",USER_BLOCK);
                     response.sendRedirect(request.getContextPath() + String.format("/login?error=%s", USER_BLOCK));
                 }
             }
         } else if(exception instanceof DisabledException) {
-            request.setAttribute("error",USER_BLOCK);
             response.sendRedirect(request.getContextPath() + String.format("/login?error=%s", USER_BLOCK));
 
+        } else {
+            response.sendRedirect(request.getContextPath() + String.format("/login?error=%s", INVALID_USER_OR_PASSWORD));
         }
     }
 }
