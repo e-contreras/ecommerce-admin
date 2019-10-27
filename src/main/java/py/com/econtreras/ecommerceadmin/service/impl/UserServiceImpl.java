@@ -1,5 +1,7 @@
 package py.com.econtreras.ecommerceadmin.service.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private UserRepository userRepository;
     @Autowired
     private UserConverter userConverter;
+    private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -59,7 +62,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         try {
             userRepository.blockUserById(id);
         } catch (Exception ex){
-            ex.printStackTrace();
+            LOGGER.error(ex.getMessage(), ex);
         }
     }
 
@@ -68,7 +71,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         try {
             userRepository.setTryLoginCount(id, count);
         } catch (Exception ex){
-            ex.printStackTrace();
+            LOGGER.error(ex.getMessage(), ex);
         }
     }
 }
