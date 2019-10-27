@@ -60,8 +60,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             userRepository.blockUserById(id);
         } catch (Exception ex){
             ex.printStackTrace();
-
         }
+    }
 
+    @Override
+    public void setTryLoginCount(Integer id, Integer count){
+        try {
+            userRepository.setTryLoginCount(id, count);
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 }

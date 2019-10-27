@@ -40,9 +40,13 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
                 if(actualUserLoginFailed >= Integer.parseInt(userTryLoginLimit)){
                     if(user.getEnabled().equals(new Short("1")))
                         userService.blockUser(user.getId());
+                    userService.setTryLoginCount(user.getId(), actualUserLoginFailed);
                     response.sendRedirect(request.getContextPath() + String.format("/login?error=%s", USER_BLOCK));
+                }else{
+                    userService.setTryLoginCount(user.getId(), actualUserLoginFailed);
                 }
             }
+            response.sendRedirect(request.getContextPath() + String.format("/login?error=%s", INVALID_USER_OR_PASSWORD));
         } else if(exception instanceof DisabledException) {
             response.sendRedirect(request.getContextPath() + String.format("/login?error=%s", USER_BLOCK));
 

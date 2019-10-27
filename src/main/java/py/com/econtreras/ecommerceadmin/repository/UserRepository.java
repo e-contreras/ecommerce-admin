@@ -12,4 +12,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Modifying
     @Query("update User u set u.active = '0' where u.id = :id")
     void blockUserById(@Param("id") Integer id);
+
+    @Modifying
+    @Query("update User u set u.loginFailed = :count where u.id = :id")
+    void setTryLoginCount(@Param("id") Integer id, Integer count);
 }

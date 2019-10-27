@@ -29,4 +29,4 @@ api:
     already-exist: El departamento que intenta agregar ya existe!
     internal-server-error: Ocurrió un error inesperado
 
-userTryLoginLimit: 1
+userTryLoginLimit: 3

@@ -8,4 +8,6 @@ public interface UserService {
 
     void blockUser(Integer id);
 
+    void setTryLoginCount(Integer id, Integer count);
+
 }

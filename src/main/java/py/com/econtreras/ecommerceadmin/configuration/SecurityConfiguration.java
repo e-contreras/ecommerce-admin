@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import py.com.econtreras.ecommerceadmin.component.CustomAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -29,6 +29,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("customAuthenticationFailureHandler")
     private AuthenticationFailureHandler customAuthenticationFailureHandler;
+
+    @Autowired
+    @Qualifier("customAuthenticationSuccessHandler")
+    private AuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
 
     @Autowired
@@ -55,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .defaultSuccessUrl("/loginsuccess")
-//                    .failureUrl("/login?error")
+                    .successHandler(customAuthenticationSuccessHandler)
                     .permitAll()
                 .and().logout()
                     .logoutUrl("/logout")
