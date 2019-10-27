@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import py.com.econtreras.api.beans.ProductBean;
 import py.com.econtreras.api.beans.ProductRequest;
 import py.com.econtreras.api.beans.ProductRequestWrapper;
 import py.com.econtreras.ecommerceadmin.service.ProductService;
@@ -43,7 +44,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ModelAndView productSave(@Valid @ModelAttribute("product") ProductRequest product){
+    public ModelAndView productSave(@Valid @ModelAttribute("product") ProductBean product){
         ModelAndView mav = new ModelAndView(RequestConstant.PURCHASE_PRODUCT_FORM_VIEW);
         product = productService.save(product);
         mav.addObject("product", product);

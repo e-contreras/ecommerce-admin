@@ -6,8 +6,15 @@ $(document).ready(function () {
             "dataType": "json"
         },
         "columns": [
-            {"data": "eraser"},
-            {"data": "bar_code"}
+            {"data": "id"},
+            {"data": "product_name"},
+            {"data": "brand.description"},
+            {"data": "category.description"},
+            {
+                "data": "action",
+                "className": "center",
+                "defaultContent": '<a href="" class="btn btn-primary"><i class="fa fa-edit"></i></a> <a href="" class="btn btn-danger"><i class="fa fa-trash"></i></a>'
+            }
         ]
     });
 });

@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import py.com.econtreras.api.beans.ImageBean;
+import py.com.econtreras.api.beans.ProductBean;
 import py.com.econtreras.api.beans.ProductRequest;
 import py.com.econtreras.ecommerceadmin.converter.ImageConverter;
 import py.com.econtreras.ecommerceadmin.converter.ProductConverter;
@@ -42,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ProductRequest save(ProductRequest productRequest) {
+    public ProductBean save(ProductBean productRequest) {
 
         try {
             ImageBean imageBean = new ImageBean();
@@ -50,9 +51,7 @@ public class ProductServiceImpl implements ProductService {
             Image image = imageConverter.buildEntity(imageBean);
             image.setOrder(1);
             image = imageRepository.save(image);
-            Product product = productConverter.build(productRequest);
-            product.setCategory(categoryRepository.findById(productRequest.getCategoryId()).orElse(null));
-            product.setBrand(brandRepository.findById(productRequest.getBrandId()).orElse(null));
+            Product product = productConverter.buildEntity(productRequest);
             productRepository.save(product);
             List<ProductImage> productImages = new ArrayList<>();
             ProductImagePK imagePK = new ProductImagePK();
@@ -66,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
             productImage.setPrincipal('S');
             productImageRepository.save(productImage);
             product.setProductImageList(productImages);
-            return productConverter.build(product);
+            return productConverter.buildBean(product);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new EcontrerasException(e.getMessage(), e);
@@ -75,16 +74,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductRequest> findAll() {
+    public List<ProductBean> findAll() {
 
         try {
             Iterable<py.com.econtreras.ecommerceadmin.entity.Product> entityList = productRepository.findAll();
             if (IterableUtils.isEmpty(entityList)) {
                 return null;
             }
-            List<ProductRequest> beans = new ArrayList<>();
+            List<ProductBean> beans = new ArrayList<>();
             for (py.com.econtreras.ecommerceadmin.entity.Product entity : entityList) {
-                beans.add(productConverter.build(entity));
+                beans.add(productConverter.buildBean(entity));
             }
             return beans;
         } catch (Exception e) {
