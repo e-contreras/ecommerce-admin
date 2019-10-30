@@ -5,11 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import py.com.econtreras.api.beans.ProductBean;
-import py.com.econtreras.api.beans.ProductRequest;
-import py.com.econtreras.api.beans.ProductRequestWrapper;
+import py.com.econtreras.api.beans.*;
+import py.com.econtreras.ecommerceadmin.service.BrandService;
+import py.com.econtreras.ecommerceadmin.service.CategoryService;
 import py.com.econtreras.ecommerceadmin.service.ProductService;
 import py.com.econtreras.ecommerceadmin.util.RequestConstant;
 
@@ -22,6 +24,10 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private BrandService brandService;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping
     public ModelAndView getProducts(){
@@ -37,18 +43,43 @@ public class ProductController {
 
 
     @GetMapping(RequestConstant.PURCHASE_PRODUCT_FORM)
-    public ModelAndView getProduct(@ModelAttribute("product") ProductRequest product){
+    public ModelAndView getProduct(@ModelAttribute("product") ProductBean product){
         ModelAndView mav = new ModelAndView(RequestConstant.PURCHASE_PRODUCT_FORM_VIEW);
         mav.addObject("product", product);
+        mav.addObject("brands", brandService.findAll());
+        mav.addObject("categories", categoryService.findAll());
         return mav;
     }
 
+    @GetMapping(RequestConstant.PURCHASE_PRODUCT_FORM_EDIT)
+    public String edit(@RequestParam(name = "id", defaultValue = "0") Integer id, Model model){
+
+        if(id != 0){
+            model.addAttribute("product", productService.findById(id));
+        }else{
+            CategoryBean catBean = new CategoryBean();
+            BrandBean brandBean = new BrandBean();
+            ProductBean productBean = new ProductBean();
+            productBean.setBrand(brandBean);
+            productBean.setCategory(catBean);
+            model.addAttribute("product", productBean);
+        }
+
+        model.addAttribute("brands", brandService.findAll());
+        model.addAttribute("categories", categoryService.findAll());
+
+        return RequestConstant.PURCHASE_PRODUCT_FORM_VIEW;
+    }
+
     @PostMapping
-    public ModelAndView productSave(@Valid @ModelAttribute("product") ProductBean product){
-        ModelAndView mav = new ModelAndView(RequestConstant.PURCHASE_PRODUCT_FORM_VIEW);
-        product = productService.save(product);
-        mav.addObject("product", product);
-        return mav;
+    public String productSave(@Valid @ModelAttribute("product") ProductBean product, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return RequestConstant.PURCHASE_PRODUCT_FORM_VIEW;
+        }
+
+        productService.save(product);
+        return "redirect:"+RequestConstant.PURCHASE_PRODUCT_FORM_VIEW;
+
     }
 
 

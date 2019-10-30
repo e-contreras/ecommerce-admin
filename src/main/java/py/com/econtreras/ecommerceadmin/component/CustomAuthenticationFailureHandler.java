@@ -23,7 +23,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     private String userTryLoginLimit;
 
     private static final String USER_BLOCK = "Usuario bloqueado";
-    private static final String INVALID_USER_OR_PASSWORD = "Usuario o contraseña inválida";
+    private static final String INVALID_USER_OR_PASSWORD = "Usuario o contrasena incorrecta";
 
     @Autowired
     @Qualifier("userService")

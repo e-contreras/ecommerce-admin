@@ -1,7 +1,8 @@
 $(document).ready(function () {
-    $('#product-table').DataTable({
+
+    var table = $('#product-table').DataTable({
         "ajax": {
-            "url": "http://localhost:8081/purchase/products/",
+            "url": "/purchase/products/",
             "type": "get",
             "dataType": "json"
         },
@@ -13,8 +14,19 @@ $(document).ready(function () {
             {
                 "data": "action",
                 "className": "center",
-                "defaultContent": '<a href="" class="btn btn-primary"><i class="fa fa-edit"></i></a> <a href="" class="btn btn-danger"><i class="fa fa-trash"></i></a>'
+                "defaultContent": '<button class="btn btn-primary edit"><i class="fa fa-edit"></i></button> <button href="" class="btn btn-danger delete"><i class="fa fa-trash"></i></button>'
             }
         ]
+
     });
+
+
+
+    $('body').on('click', '.edit', function(){
+        var row  = $(this).parents('tr')[0];
+        var data = table.row( row ).data();
+        var editForm = "/purchase/products/form-edit?id="+data.id;
+        window.location.href = editForm;
+    });
+
 });

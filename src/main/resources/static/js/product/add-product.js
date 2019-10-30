@@ -8,6 +8,7 @@ function readURL(input) {
             }else{
                 $('#imagePreview').append($("<img>",{
                     src: e.target.result,
+                    class: "img-responsive pad"
                 }));
             }
 

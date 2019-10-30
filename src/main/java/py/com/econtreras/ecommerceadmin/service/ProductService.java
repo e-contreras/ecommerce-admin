@@ -11,4 +11,6 @@ public interface ProductService {
 
     List<ProductBean> findAll();
 
+    ProductBean findById(Integer id);
+
 }

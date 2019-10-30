@@ -9,10 +9,7 @@ import py.com.econtreras.api.beans.ProductBean;
 import py.com.econtreras.api.beans.ProductRequest;
 import py.com.econtreras.ecommerceadmin.converter.ImageConverter;
 import py.com.econtreras.ecommerceadmin.converter.ProductConverter;
-import py.com.econtreras.ecommerceadmin.entity.Image;
-import py.com.econtreras.ecommerceadmin.entity.Product;
-import py.com.econtreras.ecommerceadmin.entity.ProductImage;
-import py.com.econtreras.ecommerceadmin.entity.ProductImagePK;
+import py.com.econtreras.ecommerceadmin.entity.*;
 import py.com.econtreras.ecommerceadmin.exception.EcontrerasException;
 import py.com.econtreras.ecommerceadmin.repository.*;
 import py.com.econtreras.ecommerceadmin.service.ProductService;
@@ -21,6 +18,7 @@ import org.apache.commons.collections4.IterableUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -52,6 +50,12 @@ public class ProductServiceImpl implements ProductService {
             image.setOrder(1);
             image = imageRepository.save(image);
             Product product = productConverter.buildEntity(productRequest);
+            Optional<Category> categoryOptional = categoryRepository.findById(productRequest.getCategoryId());
+            if(categoryOptional.isPresent())
+                product.setCategory(categoryOptional.get());
+            Optional<Brand> optionalBrand = brandRepository.findById(productRequest.getBrandId());
+            if(optionalBrand.isPresent())
+                product.setBrand(optionalBrand.get());
             productRepository.save(product);
             List<ProductImage> productImages = new ArrayList<>();
             ProductImagePK imagePK = new ProductImagePK();
@@ -91,5 +95,14 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
 
+    }
+
+
+    public ProductBean findById(Integer id){
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if(optionalProduct.isPresent()){
+            return productConverter.buildBean(optionalProduct.get());
+        }
+        return null;
     }
 }
