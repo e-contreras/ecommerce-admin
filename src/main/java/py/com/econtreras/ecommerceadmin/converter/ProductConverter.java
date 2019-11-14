@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import py.com.econtreras.api.beans.ProductBean;
 import py.com.econtreras.api.beans.ProductRequest;
+import py.com.econtreras.ecommerceadmin.entity.Brand;
+import py.com.econtreras.ecommerceadmin.entity.Category;
 import py.com.econtreras.ecommerceadmin.entity.Product;
 import py.com.econtreras.ecommerceadmin.repository.BrandRepository;
 
@@ -19,11 +21,23 @@ public class ProductConverter {
     public ProductBean buildBean(Product entity){
         ProductBean bean= new ProductBean();
         bean.setId(entity.getId());
+        bean.setCode(entity.getCode());
         bean.setProductName(entity.getProductName());
         bean.setDescription(entity.getDescription());
-        bean.setBrand(entity.getBrand() != null ? brandConverter.buildBean(entity.getBrand()) : null);
-        bean.setCategory(entity.getCategory() != null ? categoryConverter.buildBean(entity.getCategory()) : null);
-        //bean.setFile(entity);
+        bean.setModel(entity.getModel());
+
+        Brand brand = entity.getBrand();
+        if(brand != null){
+            bean.setBrand(brandConverter.buildBean(entity.getBrand()));
+            bean.setBrandId(brand.getId());
+        }
+
+        Category category = entity.getCategory();
+        if(category != null){
+            bean.setCategory(categoryConverter.buildBean(entity.getCategory()));
+            bean.setCategoryId(brand.getId());
+        }
+
         return bean;
     }
 
@@ -34,6 +48,9 @@ public class ProductConverter {
         entity.setCode(bean.getCode());
         entity.setCategory(bean.getCategory() != null ? categoryConverter.buildEntity(bean.getCategory()) : null);
         entity.setBrand(bean.getBrand() != null ? brandConverter.buildEntity(bean.getBrand()) : null);
+        entity.setCode(bean.getCode());
+        entity.setDescription(bean.getDescription());
+        entity.setModel(bean.getModel());
         return entity;
     }
 

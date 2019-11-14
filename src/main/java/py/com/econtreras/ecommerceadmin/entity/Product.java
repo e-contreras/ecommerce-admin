@@ -82,5 +82,8 @@ public class Product implements Serializable {
     private Category category;
     @JoinColumn(name = "marca", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
-    private Brand brand;    
+    private Brand brand;
+    @Basic(optional = false)
+    @Column(name = "modelo", nullable = true, length = 200)
+    private String model;
 }

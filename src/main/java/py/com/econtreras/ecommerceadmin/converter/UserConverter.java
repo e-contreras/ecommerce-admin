@@ -28,5 +28,15 @@ public class UserConverter {
         return bean;
     }
 
+    public User build(UserBean bean){
+        User user = new User();
+        user.setId(bean.getId());
+        user.setActive(bean.getEnabled());
+        user.setPassword(bean.getPassword());
+        user.setUsername(bean.getUsername());
+
+        return user;
+    }
+
 
 }

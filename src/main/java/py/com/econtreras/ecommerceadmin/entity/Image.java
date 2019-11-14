@@ -32,7 +32,7 @@ public class Image implements Serializable {
     @Column(name = "id", nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "src", nullable = false, length = 45)
+    @Column(name = "src", nullable = false)
     private byte[]  src;
     @Basic(optional = false)
     @Column(name = "orden", nullable = false)
@@ -54,5 +54,9 @@ public class Image implements Serializable {
     @JoinColumn(name = "usu_modificacion", referencedColumnName = "id")
     @ManyToOne
     private User modificationUser;
+    @Column(name = "formato", nullable = false)
+    private String format;
+    @Column(name = "nombre", nullable = false)
+    private String name;
 
  }

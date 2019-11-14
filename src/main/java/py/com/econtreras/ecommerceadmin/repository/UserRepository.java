@@ -16,4 +16,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Modifying
     @Query("update User u set u.loginFailed = :count where u.id = :id")
     void setTryLoginCount(@Param("id") Integer id, Integer count);
+
+    @Query("select u from User u left join u.person p where p.email = :email")
+    User findByEmailIdIgnoreCase(@Param("email") String email);
+
 }

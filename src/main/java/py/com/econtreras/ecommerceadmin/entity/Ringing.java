@@ -2,6 +2,7 @@
 package py.com.econtreras.ecommerceadmin.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -33,9 +34,8 @@ public class Ringing implements Serializable {
     @Column(name = "timbrado", nullable = false, length = 45)
     private String ringing;
     @Basic(optional = false)
-    @Column(name = "fec_validez", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date validityDate;
+    @Column(name = "fec_validez", nullable = false, columnDefinition = "DATE")
+    private LocalDate validityDate;
     @Basic(optional = false)
     @Column(name = "tic_documento", nullable = false, length = 10)
     private String documentType;
@@ -43,5 +43,8 @@ public class Ringing implements Serializable {
     private List<CreditNote> creditNoteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ringing")
     private List<SalesInvoice> salesInvoiceList;
+    @Basic(optional = false)
+    @Column(name = "borrado")
+    private boolean deleted;
     
 }

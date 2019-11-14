@@ -72,13 +72,17 @@ public class ProductController {
     }
 
     @PostMapping
-    public String productSave(@Valid @ModelAttribute("product") ProductBean product, BindingResult bindingResult){
+    public ModelAndView productSave(@Valid @ModelAttribute("product") ProductBean product, BindingResult bindingResult){
+        ModelAndView mav = new ModelAndView(RequestConstant.PURCHASE_PRODUCT_FORM_VIEW);
         if(bindingResult.hasErrors()){
-            return RequestConstant.PURCHASE_PRODUCT_FORM_VIEW;
+            mav.addObject("brands", brandService.findAll());
+            mav.addObject("categories", categoryService.findAll());
+            return mav;
         }
 
+        mav.setViewName(RequestConstant.PURCHASE_PRODUCT_VIEW);
         productService.save(product);
-        return "redirect:"+RequestConstant.PURCHASE_PRODUCT_FORM_VIEW;
+        return mav;
 
     }
 

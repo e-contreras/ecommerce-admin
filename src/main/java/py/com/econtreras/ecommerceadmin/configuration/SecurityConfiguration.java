@@ -1,9 +1,11 @@
 package py.com.econtreras.ecommerceadmin.configuration;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -43,6 +45,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/confirm").permitAll()
                 .antMatchers(
                         "/login",
                         "/css/**",
@@ -72,6 +76,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         Properties prop = new Properties();
         prop.load(getClass().getClassLoader().getResourceAsStream("templates/properties/message.properties"));
         return prop;
+    }
+
+    @Bean
+    public Jackson2ObjectMapperBuilder objectMapperBuilder() {
+        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+        builder.modules(new JavaTimeModule());
+
+        return builder;
     }
 
 }
