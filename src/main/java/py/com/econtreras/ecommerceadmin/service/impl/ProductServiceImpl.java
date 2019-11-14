@@ -10,7 +10,7 @@ import py.com.econtreras.api.beans.ImageBean;
 import py.com.econtreras.api.beans.ProductBean;
 import py.com.econtreras.ecommerceadmin.converter.ImageConverter;
 import py.com.econtreras.ecommerceadmin.converter.ProductConverter;
-import py.com.econtreras.ecommerceadmin.entity.*;
+import py.com.econtreras.entity.*;
 import py.com.econtreras.ecommerceadmin.exception.EcontrerasException;
 import py.com.econtreras.ecommerceadmin.repository.*;
 import py.com.econtreras.ecommerceadmin.service.ProductService;
@@ -89,12 +89,12 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductBean> findAll() {
 
         try {
-            Iterable<py.com.econtreras.ecommerceadmin.entity.Product> entityList = productRepository.findAll();
+            Iterable<py.com.econtreras.entity.Product> entityList = productRepository.findAll();
             if (IterableUtils.isEmpty(entityList)) {
                 return null;
             }
             List<ProductBean> beans = new ArrayList<>();
-            for (py.com.econtreras.ecommerceadmin.entity.Product entity : entityList) {
+            for (py.com.econtreras.entity.Product entity : entityList) {
                 beans.add(productConverter.buildBean(entity));
             }
             return beans;

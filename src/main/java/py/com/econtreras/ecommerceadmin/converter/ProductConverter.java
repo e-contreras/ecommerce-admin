@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import py.com.econtreras.api.beans.ProductBean;
 import py.com.econtreras.api.beans.ProductRequest;
-import py.com.econtreras.ecommerceadmin.entity.Brand;
-import py.com.econtreras.ecommerceadmin.entity.Category;
-import py.com.econtreras.ecommerceadmin.entity.Product;
+import py.com.econtreras.entity.Brand;
+import py.com.econtreras.entity.Category;
+import py.com.econtreras.entity.Product;
 import py.com.econtreras.ecommerceadmin.repository.BrandRepository;
 
 @Component

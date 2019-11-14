@@ -3,7 +3,7 @@ package py.com.econtreras.ecommerceadmin.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import py.com.econtreras.ecommerceadmin.entity.Ringing;
+import py.com.econtreras.entity.Ringing;
 
 import java.util.Optional;
 

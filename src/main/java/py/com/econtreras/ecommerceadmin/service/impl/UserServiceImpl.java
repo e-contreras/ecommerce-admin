@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.econtreras.api.beans.UserBean;
 import py.com.econtreras.ecommerceadmin.converter.UserConverter;
-import py.com.econtreras.ecommerceadmin.entity.Role;
+import py.com.econtreras.entity.Role;
 import py.com.econtreras.ecommerceadmin.repository.UserRepository;
 import py.com.econtreras.ecommerceadmin.service.UserService;
 
@@ -31,14 +31,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        py.com.econtreras.ecommerceadmin.entity.User user = userRepository.findByUsername(username);
+        py.com.econtreras.entity.User user = userRepository.findByUsername(username);
         Set<Role> roles = new HashSet<>();
         roles.add(user.getRole());
         List<GrantedAuthority> authorities = buildGrantedAutorities(roles);
         return buildUser(user, authorities);
     }
 
-    private User buildUser(py.com.econtreras.ecommerceadmin.entity.User entity, List<GrantedAuthority> grantedAuthorityList){
+    private User buildUser(py.com.econtreras.entity.User entity, List<GrantedAuthority> grantedAuthorityList){
         return new User(entity.getUsername(), entity.getPassword(),entity.getActive() > 0, true, true, true,grantedAuthorityList);
     }
 
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public UserBean findByUserName(String username) {
-        py.com.econtreras.ecommerceadmin.entity.User user = userRepository.findByUsername(username);
+        py.com.econtreras.entity.User user = userRepository.findByUsername(username);
         return userConverter.build(user);
     }
 

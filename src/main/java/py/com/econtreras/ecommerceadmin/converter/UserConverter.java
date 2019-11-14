@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import py.com.econtreras.api.beans.PersonResponse;
 import py.com.econtreras.api.beans.UserBean;
-import py.com.econtreras.ecommerceadmin.entity.User;
+import py.com.econtreras.entity.User;
 
 @Component
 public class UserConverter {

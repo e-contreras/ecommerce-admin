@@ -16,5 +16,4 @@ public interface RingningService {
 
     boolean checkExistByRingning(String ringing);
 
-
 }

@@ -3,8 +3,8 @@ package py.com.econtreras.ecommerceadmin.converter;
 import org.springframework.stereotype.Component;
 import py.com.econtreras.api.beans.MenuResponse;
 import py.com.econtreras.api.beans.MenuSection;
-import py.com.econtreras.ecommerceadmin.entity.Menu;
-import py.com.econtreras.ecommerceadmin.entity.MenuModule;
+import py.com.econtreras.entity.Menu;
+import py.com.econtreras.entity.MenuModule;
 
 import java.util.ArrayList;
 import java.util.List;
