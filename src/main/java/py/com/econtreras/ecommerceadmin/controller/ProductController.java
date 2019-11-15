@@ -2,6 +2,7 @@ package py.com.econtreras.ecommerceadmin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import py.com.econtreras.ecommerceadmin.service.ProductService;
 import py.com.econtreras.ecommerceadmin.util.RequestConstant;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping(RequestConstant.PURCHASE_PRODUCT)
@@ -86,5 +88,16 @@ public class ProductController {
 
     }
 
+    @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity productList(@RequestParam("name") String name){
+
+        List<ProductBean> list = productService.findByProductName(name);
+        if(list.isEmpty()){
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }else{
+            return new ResponseEntity<>(new ProductRequestWrapper(list), HttpStatus.OK);
+        }
+
+    }
 
 }
