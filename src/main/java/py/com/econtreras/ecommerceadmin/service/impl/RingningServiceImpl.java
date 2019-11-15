@@ -3,7 +3,7 @@ package py.com.econtreras.ecommerceadmin.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import py.com.econtreras.ecommerceadmin.converter.RingingConverter;
-import py.com.econtreras.ecommerceadmin.entity.Ringing;
+import py.com.econtreras.entity.Ringing;
 import py.com.econtreras.ecommerceadmin.model.RingingModel;
 import py.com.econtreras.ecommerceadmin.repository.RinginRepository;
 import py.com.econtreras.ecommerceadmin.service.RingningService;

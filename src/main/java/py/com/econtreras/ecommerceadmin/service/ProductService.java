@@ -13,4 +13,7 @@ public interface ProductService {
 
     ProductBean findById(Integer id);
 
+    List<ProductBean> findByProductName(String name);
+
+
 }

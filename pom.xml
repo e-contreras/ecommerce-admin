@@ -94,6 +94,11 @@
 			<artifactId>thymeleaf-extras-java8time</artifactId>
 			<version>3.0.1.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>py.com.econtreras</groupId>
+			<artifactId>entities</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 
 	</dependencies>
 

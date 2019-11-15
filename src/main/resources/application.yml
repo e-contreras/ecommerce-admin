@@ -5,10 +5,10 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MariaDBDialect
     show-sql: true
   datasource:
-    url: jdbc:mysql://localhost:3306/econtreras?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/econtreras
     username: econtreras_user
     password: abcd.123
   jackson:
@@ -21,6 +21,8 @@ spring:
       max-request-size: 215MB
       location: ${java.io.tmpdir}
   thymeleaf:
+    cache: false
+  resources:
     cache: false
   mail:
     host: smtp.gmail.com

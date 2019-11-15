@@ -1,7 +1,7 @@
 package py.com.econtreras.ecommerceadmin.converter;
 
 import org.springframework.stereotype.Component;
-import py.com.econtreras.ecommerceadmin.entity.Ringing;
+import py.com.econtreras.entity.Ringing;
 import py.com.econtreras.ecommerceadmin.model.RingingModel;
 
 import java.time.LocalDate;

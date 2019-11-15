@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import py.com.econtreras.ecommerceadmin.entity.Ringing;
+import py.com.econtreras.entity.Ringing;
 import py.com.econtreras.ecommerceadmin.model.RingingModel;
 import py.com.econtreras.ecommerceadmin.model.Wrapper;
 import py.com.econtreras.ecommerceadmin.service.RingningService;

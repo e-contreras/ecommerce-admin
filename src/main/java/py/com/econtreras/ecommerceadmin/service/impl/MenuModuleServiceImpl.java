@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import py.com.econtreras.api.beans.MenuSection;
 import py.com.econtreras.ecommerceadmin.converter.MenuModuloConverter;
-import py.com.econtreras.ecommerceadmin.entity.MenuModule;
+import py.com.econtreras.entity.MenuModule;
 import py.com.econtreras.ecommerceadmin.repository.MenuModuleRepository;
 import py.com.econtreras.ecommerceadmin.service.MenuModuleSerivice;
 

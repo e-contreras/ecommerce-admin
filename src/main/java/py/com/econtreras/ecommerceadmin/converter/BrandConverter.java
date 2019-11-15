@@ -1,9 +1,9 @@
 package py.com.econtreras.ecommerceadmin.converter;
 
+import py.com.econtreras.entity.Brand;
 import org.springframework.stereotype.Component;
 import py.com.econtreras.api.beans.BrandBean;
-import py.com.econtreras.api.beans.ProductBean;
-import py.com.econtreras.ecommerceadmin.entity.Brand;
+
 
 @Component
 public class BrandConverter {

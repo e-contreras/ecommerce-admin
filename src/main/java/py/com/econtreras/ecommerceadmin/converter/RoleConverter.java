@@ -2,7 +2,7 @@ package py.com.econtreras.ecommerceadmin.converter;
 
 import org.springframework.stereotype.Component;
 import py.com.econtreras.api.beans.RoleBean;
-import py.com.econtreras.ecommerceadmin.entity.Role;
+import py.com.econtreras.entity.Role;
 
 @Component
 public class RoleConverter {

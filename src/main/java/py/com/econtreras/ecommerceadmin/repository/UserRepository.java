@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import py.com.econtreras.ecommerceadmin.entity.User;
+import py.com.econtreras.entity.User;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
 

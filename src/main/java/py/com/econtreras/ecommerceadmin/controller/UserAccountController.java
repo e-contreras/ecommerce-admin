@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import py.com.econtreras.api.beans.UserBean;
 import py.com.econtreras.ecommerceadmin.converter.UserConverter;
-import py.com.econtreras.ecommerceadmin.entity.ConfirmationToken;
-import py.com.econtreras.ecommerceadmin.entity.Person;
-import py.com.econtreras.ecommerceadmin.entity.User;
+import py.com.econtreras.entity.ConfirmationToken;
+import py.com.econtreras.entity.Person;
+import py.com.econtreras.entity.User;
 import py.com.econtreras.ecommerceadmin.repository.ConfirmationTokenRepository;
 import py.com.econtreras.ecommerceadmin.repository.UserRepository;
 import py.com.econtreras.ecommerceadmin.service.impl.EmailSenderService;
@@ -55,7 +55,7 @@ public class UserAccountController {
             Person person = new Person();
             person.setName(user.getName());
             person.setLastname(user.getLastName());
-            py.com.econtreras.ecommerceadmin.entity.User entity = userConverter.build(user);
+            py.com.econtreras.entity.User entity = userConverter.build(user);
             entity.setPerson(person);
             userRepository.save(entity);
 
