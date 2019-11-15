@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
 <head>
     <div th:replace="fragments/head :: head"></div>
     <link rel="stylesheet" th:href="@{/css/product/add-product.css}">
@@ -9,8 +9,8 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
-    <div th:replace="fragments/header :: header"></div>
-    <div th:replace="fragments/menu :: menu"></div>
+    <div th:replace="fragments/header::header"></div>
+    <div th:replace="fragments/menu::menu"></div>
     <div>
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -70,7 +70,7 @@
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-<div th:replace="fragments/head :: footer-js"></div>
+<div th:replace="fragments/head::footer-js"></div>
 <script th:src="@{/bower_components/datatables.net/js/jquery.dataTables.min.js}"></script>
 <script th:src="@{/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
 <script th:src="@{/js/product/product-list.js}"></script>
