@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+    <div id="assign-transportation-index">
+        <section class="content-header">
+            <h1>
+                L&oacute;gistica
+                <small>m&oacute;dulo asignar transporte</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+                <li><a href="#">L&oacute;gistica</a></li>
+                <li class="active">Asignar transporte</li>
+            </ol>
+        </section>
+        <div class="table-responsive" style="padding-top:1em;">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <span><i class="fa fa-truck"></i> ASIGNAR PERSONAL DE TRANSPORTE</span>
+                    <div style="float: right;" v-text="'Fecha: '+ '20/11/2019'"></div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h4>Para</h4>
+                            <address>
+                                <strong>{{forClient.name}}</strong>
+                                <div>{{forClient.address}}</div>
+                                <div>{{forClient.street}}</div>
+                                <div>
+                                    <span>Telefono: </span>
+                                    <span v-text="forClient.telephone"></span>
+                                </div>
+                                <div>
+                                    <span>E-mail: </span>
+                                    <span v-text="forClient.email"></span>
+                                </div>
+                            </address>
+                        </div>
+                        <div class="col-sm-4">
+                            <h4>Pedido</h4>
+                            <address>
+                                <div>
+                                    <span>ID del pedido: </span>
+                                    <span v-text="pendingInvoice.id"></span>
+                                </div>
+                                <div>
+                                    <span>Pago realizado: </span>
+                                    <span v-text="pendingInvoice.paymentDate"></span>
+                                </div>
+                                <div>
+                                    <span>Cuenta: </span>
+                                    <span v-text="pendingInvoice.account"></span>
+                                </div>
+                            </address>
+                        </div>
+                        <div class="col-sm-4">
+                            <h4>Asignar personal de transporte</h4>
+                            <div class="form-inline form-group">
+                                <div class="form-group mb-2">
+                                    <span class="col-form-label">Chofer: </span>
+                                </div>
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <select class="form-control" style="margin-left:1em;">
+                                        <option>Bala</option>
+                                        <option>Elvio</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-inline form-group" style="margin-top:.5em;">
+                                <div class="form-group mb-2">
+                                    <span>Movil: </span>
+                                </div>
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <select class="form-control" style="margin-left:1.4em;">
+                                        <option>Mercedes</option>
+                                        <option>Escania</option>
+                                        <option>Toyota</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table id="assign-packing-table" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Calidad</th>
+                            <th>Producto</th>
+                            <th>C&oacute;digo</th>
+                            <th>descripci&oacute;n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(assign, index) in listProduct" :key="index">
+                            <td>{{assign.quality}}</td>
+                            <td>{{assign.product}}</td>
+                            <td>{{assign.cod}}</td>
+                            <td>{{assign.description}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div style="float: right;">
+                    <span><button class="btn btn-primary">Asignar <i class="fa fa-share"></i></button></span>
+                    <span><button class="btn btn-secondary">Imprimir <i class="fa fa-print"></i></button></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/logistics/assign_transportation/assign-transportation-index.js}"></script>
+</html>

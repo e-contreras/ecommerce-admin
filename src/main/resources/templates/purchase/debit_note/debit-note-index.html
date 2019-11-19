@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+    <div id="debit-note-index">
+        <section class="content-header">
+            <h1>
+                Nota de D&eacute;bito
+                <small>m&oacute;dulo de nota de d&eacute;bito</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+                <li><a href="#">Compras</a></li>
+                <li class="active">D&eacute;bito</li>
+            </ol>
+        </section>
+        <div class="table-responsive">
+
+            <div class="box-header" style="float: right;">
+                <a th:href="@{/purchase/products/form}" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</a>
+            </div>
+            <table id="credit-note-table" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Cod</th>
+                        <th>Proveedor</th>
+                        <th>RUC</th>
+                        <th>Comentario</th>
+                        <th>Fecha de recepci&oacute;n</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(debitNote, index) in listDebitNote" :key="index">
+                        <td>{{debitNote.cod}}</td>
+                        <td>{{debitNote.provider}}</td>
+                        <td>{{debitNote.ruc}}</td>
+                        <td>{{debitNote.comment}}</td>
+                        <td>{{debitNote.reception_date}}</td>
+                        <td>
+                            <button class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script th:src="@{/js/debit_note/debit-note-index.js}"></script>
+</html>

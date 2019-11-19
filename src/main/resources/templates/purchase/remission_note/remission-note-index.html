@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+    <div id="remission-note-index">
+        <section class="content-header">
+            <h1>
+                Nota de Remisiones
+                <small>módulo de nota de remisiones</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+                <li><a href="#">Compras</a></li>
+                <li class="active">Remisiones</li>
+            </ol>
+        </section>
+        <div class="table-responsive">
+
+            <div class="box-header" style="float: right;">
+                <a th:href="@{/purchase/products/form}" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</a>
+            </div>
+            <table id="exchange" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Cod</th>
+                        <th>Proveedor</th>
+                        <th>RUC</th>
+                        <th>Factura</th>
+                        <th>Comentario</th>
+                        <th>Fecha de recepci&oacute;n</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(note, index) in listRemissionNote" :key="index">
+                        <td>{{note.cod}}</td>
+                        <td>{{note.provider}}</td>
+                        <td>{{note.ruc}}</td>
+                        <td>{{note.invoice}}</td>
+                        <td>{{note.comment}}</td>
+                        <td>{{note.reception_date}}</td>
+                        <td>
+                            <button class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script th:src="@{/js/remission_note/remission-note-index.js}"></script>
+</html>

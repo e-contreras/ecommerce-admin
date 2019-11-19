@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+    <div id="referral-note-index">
+        <section class="content-header">
+            <h1>
+                L&oacute;gistica
+                <small>m&oacute;dulo de pedidos</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+                <li><a href="#">L&oacute;gistica</a></li>
+                <li class="active">Nota de remisi&oacute;n</li>
+            </ol>
+        </section>
+        <div class="table-responsive">
+            <table id="exchange" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Orden</th>
+                        <th>Cliente</th>
+                        <th>RUC</th>
+                        <th>Fecha de pedido</th>
+                        <th>Fecha entrega pautada</th>
+                        <th>Chofer</th>
+                        <th>Mobil</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(referral, index) in listReferralNote" :key="index">
+                        <td>{{referral.order}}</td>
+                        <td>{{referral.client}}</td>
+                        <td>{{referral.ruc}}</td>
+                        <td>{{referral.orderDate}}</td>
+                        <td>{{referral.deliveryDateAgreed}}</td>
+                        <td>{{referral.driver}}</td>
+                        <td>{{referral.vehicle}}</td>
+                        <td>
+                            <button class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-xs btn-success"><i class="fa fa-print"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script th:src="@{/js/logistics/remission_note/remission-note-index.js}"></script>
+</html>

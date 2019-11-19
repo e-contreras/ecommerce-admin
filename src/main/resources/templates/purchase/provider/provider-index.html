@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+    <div>
+        <section class="content-header">
+            <h1>
+                Proveedores
+                <small>módulo de proveedores</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+                <li><a href="#">Compras</a></li>
+                <li class="active">Proveedores</li>
+            </ol>
+        </section>
+        <div class="table-responsive">
+
+            <div class="box-header" style="float: right;">
+                <a th:href="@{/purchase/products/form}" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</a>
+            </div>
+            <table id="provider" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Raz&oacute;n SOCIAL</th>
+                        <th>RUC</th>
+                        <th>Persona cont.</th>
+                        <th>Direcci&oacute;n</th>
+                        <th>Email</th>
+                        <th>Tel&eacute;fono</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(provider, index) in listProvider" :key="index">
+                        <td>{{provider.rs}}</td>
+                        <td>{{provider.ruc}}</td>
+                        <td>{{provider.persona}}</td>
+                        <td>{{provider.direccion}}</td>
+                        <td>{{provider.email}}</td>
+                        <td>{{provider.telefono}}</td>
+                        <td style="text-align: center;">
+                            <button class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script th:src="@{/js/provider/provider-index.js}"></script>
+</html>

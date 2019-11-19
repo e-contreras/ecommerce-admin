@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+    <div id="order-index">
+        <section class="content-header">
+            <h1>
+                Pedidos
+                <small>m&oacute;dulo de pedidos</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+                <li><a href="#">Ventas</a></li>
+                <li class="active">Pedidos</li>
+            </ol>
+        </section>
+        <div class="table-responsive">
+
+            <div class="box-header" style="float: right;">
+                <a th:href="@{/purchase/products/form}" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</a>
+            </div>
+            <table id="exchange" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>C&oacute;digo</th>
+                        <th>Decripci&oacute;n</th>
+                        <th>Categor&iacute;a</th>
+                        <th>F. publicaci&oacute;n</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(order, index) in listOrdersSales" :key="index">
+                        <td>{{order.cod}}</td>
+                        <td>{{order.description}}</td>
+                        <td>{{order.category}}</td>
+                        <td>{{order.fPublication}}</td>
+                        <td><span :class="'label ' + classState(order.state)">{{order.state}}</span></td>
+                        <td>
+                            <button class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script th:src="@{/js/sales/orders/order-index.js}"></script>
+</html>
