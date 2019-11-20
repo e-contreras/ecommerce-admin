@@ -29,7 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(exchange, index) in listExchange" :key="index">
+                    <tr v-for="(exchange, index) in valuePages" :key="index">
                         <td>{{exchange.cod}}</td>
                         <td>{{exchange.description}}</td>
                         <td>{{exchange.category}}</td>
@@ -42,7 +42,16 @@
                     </tr>
                 </tbody>
             </table>
+            <div>
+                <div class="col-md-12">
+                    <b-pagination v-if="getLength > 0"
+                                  :total-rows="getLength" 
+                                  v-model="currentPage" 
+                                  :per-page="itemPerPages">
+                    </b-pagination>
+                </div>
+            </div>
         </div>
     </div>
-    <script th:src="@{/js/exchange/exchange-index.js}"></script>
+    <script th:src="@{/js/purchase/exchange/exchange-index.js}"></script>
 </html>

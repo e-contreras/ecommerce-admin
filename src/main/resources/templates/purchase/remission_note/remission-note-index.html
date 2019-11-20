@@ -44,7 +44,16 @@
                     </tr>
                 </tbody>
             </table>
+            <div>
+                <div class="col-md-12">
+                    <b-pagination v-if="getLength > 0"
+                                  :total-rows="getLength" 
+                                  v-model="currentPage" 
+                                  :per-page="itemPerPages">
+                    </b-pagination>
+                </div>
+            </div>
         </div>
     </div>
-    <script th:src="@{/js/remission_note/remission-note-index.js}"></script>
+    <script th:src="@{/js/purchase/remission_note/remission-note-index.js}"></script>
 </html>

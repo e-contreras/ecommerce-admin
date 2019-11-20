@@ -29,7 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(debitNote, index) in listDebitNote" :key="index">
+                    <tr v-for="(debitNote, index) in valuePages" :key="index">
                         <td>{{debitNote.cod}}</td>
                         <td>{{debitNote.provider}}</td>
                         <td>{{debitNote.ruc}}</td>
@@ -42,7 +42,16 @@
                     </tr>
                 </tbody>
             </table>
+            <div>
+                <div class="col-md-12">
+                    <b-pagination v-if="getLength > 0"
+                                  :total-rows="getLength" 
+                                  v-model="currentPage" 
+                                  :per-page="itemPerPages">
+                    </b-pagination>
+                </div>
+            </div>
         </div>
     </div>
-    <script th:src="@{/js/debit_note/debit-note-index.js}"></script>
+    <script th:src="@{/js/purchase/debit_note/debit-note-index.js}"></script>
 </html>

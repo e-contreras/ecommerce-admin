@@ -25,12 +25,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div>
-                                        <input type="date" class="form-control">
+                                        <input v-model="from" type="date" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div>
-                                        <input type="date" class="form-control">
+                                        <input v-model="to" type="date" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -45,5 +45,5 @@
             </div>
         </div>
     </div>
-    <script th:src="@{/js/book/book-index.js}"></script>
+    <script th:src="@{/js/sales/book/book-index.js}"></script>
 </html>

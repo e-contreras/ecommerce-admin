@@ -4,7 +4,7 @@
         <section class="content-header">
             <h1>
                 L&oacute;gistica
-                <small>m&oacute;dulo de pedidos</small>
+                <small>m&oacute;dulo de Nota de remisi&oacute;n</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -13,7 +13,7 @@
             </ol>
         </section>
         <div class="table-responsive">
-            <table id="exchange" class="table table-hover">
+            <table id="referral-note-table" class="table table-hover">
                 <thead>
                     <tr>
                         <th>Orden</th>
@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(referral, index) in listReferralNote" :key="index">
+                    <tr v-for="(referral, index) in valuePages" :key="index">
                         <td>{{referral.order}}</td>
                         <td>{{referral.client}}</td>
                         <td>{{referral.ruc}}</td>
@@ -42,7 +42,16 @@
                     </tr>
                 </tbody>
             </table>
+            <div>
+                <div class="col-md-12 row">
+                    <b-pagination v-if="getLength > 0"
+                                  :total-rows="getLength" 
+                                  v-model="currentPage" 
+                                  :per-page="itemPerPages">
+                    </b-pagination>
+                </div>
+            </div>
         </div>
     </div>
-    <script th:src="@{/js/logistics/remission_note/remission-note-index.js}"></script>
+    <script th:src="@{/js/logistics/referral_note/referral-note-index.js}"></script>
 </html>

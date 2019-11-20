@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
-    <div>
+    <div id="provider-index">
         <section class="content-header">
             <h1>
                 Proveedores
-                <small>módulo de proveedores</small>
+                <small>m&oacute;dulo de proveedores</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -17,7 +17,7 @@
             <div class="box-header" style="float: right;">
                 <a th:href="@{/purchase/products/form}" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</a>
             </div>
-            <table id="provider" class="table table-hover">
+            <table id="provider-table" class="table table-hover">
                 <thead>
                     <tr>
                         <th>Raz&oacute;n SOCIAL</th>
@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(provider, index) in listProvider" :key="index">
+                    <tr v-for="(provider, index) in valuePages" :key="index">
                         <td>{{provider.rs}}</td>
                         <td>{{provider.ruc}}</td>
                         <td>{{provider.persona}}</td>
@@ -44,7 +44,16 @@
                     </tr>
                 </tbody>
             </table>
+            <div>
+                <div class="col-md-12 row">
+                    <b-pagination v-if="getLength > 0"
+                                  :total-rows="getLength" 
+                                  v-model="currentPage" 
+                                  :per-page="itemPerPages">
+                    </b-pagination>
+                </div>
+            </div>
         </div>
     </div>
-    <script th:src="@{/js/provider/provider-index.js}"></script>
+    <script th:src="@{/js/purchase/provider/provider-index.js}"></script>
 </html>

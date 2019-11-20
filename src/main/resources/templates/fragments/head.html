@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
 <div th:fragment="head">
     <head>
         <meta charset="utf-8">
@@ -29,6 +29,7 @@
         <!-- Google Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
         <script th:src="@{/webjars/vue/2.6.10/vue.js}"></script>
+        <script th:src="@{/js/bootstrap-vue.min.js}"></script>
     </head>
 </div>
 
