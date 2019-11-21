@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+    <div id="provider-form">
+        <section class="content-header">
+            <h1>
+                Producto
+                <small>llene los campos</small>
+            </h1>
+        </section>
+
+        <div class="table-responsive" style="margin-top: 2em;">
+            <form action="#" method="post" enctype="multipart/form-data">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="firstName" class="col-sm-2 col-form-label">Nombre:</label>
+                        <div class="col-sm-10">
+                            <input v-model="form.firsName" type="text" class="form-control" id="firstName" placeholder="Nombre"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="razon-social" class="col-sm-2 col-form-label">Raz. social:</label>
+                        <div class="col-sm-10">
+                            <input v-model="form.businessName" type="text" class="form-control" id="razon-social" placeholder="Raz&oacute;n Social"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="fecha-nacimiento" class="col-sm-2 col-form-label">Fecha nacimiento:</label>
+                        <div class="col-sm-10">
+                            <input v-model="form.birthDate" type="date" class="form-control" id="fecha-nacimiento"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="e-mail" class="col-sm-2 col-form-label">E-mail:</label>
+                        <div class="col-sm-10">
+                            <input v-model="form.email" type="email" class="form-control" id="e-mail" placeholder="Direcci&oacute;n de correo electronico"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="telepohone" class="col-sm-2 col-form-label">Telefono:</label>
+                        <div class="col-sm-10">
+                            <input v-model="form.telephone" type="number" class="form-control" id="telephone"/>
+                        </div>
+                    </div>
+                </div>
+                <!--columna 2-->
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="lastName" class="col-sm-2 col-form-label">Apellido:</label>
+                        <div class="col-sm-10">
+                            <input v-model="form.lastName" type="text" class="form-control" id="lastName" placeholder="Apellido"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Tipo documento:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" v-model="form.docType">
+                                <option value="0">Seleccione tipo de documento</option>
+                                <option value="1">Hola</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="dir-par" class="col-sm-2 col-form-label">Direcci&oacute;n particular:</label>
+                        <div class="col-sm-10">
+                            <input v-model="form.homeAddress" type="text" class="form-control" id="dir-par" placeholder="Direcci&oacute;n particular"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="dir-lab" class="col-sm-2 col-form-label">Direcci&oacute;n laboral:</label>
+                        <div class="col-sm-10">
+                            <input v-model="form.workAddress" type="text" class="form-control" id="dir-lab" placeholder="Direcci&oacute;n laboral"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="dir-lab" class="col-sm-2 col-form-label">Imagen:</label>
+                        <div class="col-sm-10">
+                            <button class="btn btn-primary active btn-sm input-div-container">Seleccione una imagen 
+                                <i class="fa fa-file-image-o"></i>
+                                <input class="input-file" type="file"
+                                       accept=".jpg, .png, .jpeg"
+                                       @change="getSelectImage"
+                                       multiple/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <button class="btn btn-primary btn-sm input-div-container"><i class="fa fa-floppy-o"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script th:src="@{/js/purchase/provider/provider-form.js}"></script>
+</html>

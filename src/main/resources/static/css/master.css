@@ -1,0 +1,23 @@
+/*Input file*/
+* {
+    margin: 0px;
+    padding: 0px;
+}
+.input-div-container {
+    position: relative;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+}
+
+.input-file {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}

@@ -16,7 +16,7 @@ var vmProvider = new Vue({
         listProvider: list,
         valuePages: [],
         itemPerPages: 10,
-        currentPage: 1,
+        currentPage: 1
     },
     created() {
         this.filterItems();
@@ -76,7 +76,7 @@ var vmProvider = new Vue({
                     console.log(data);
                 }.bind(this)
             });
-        }
+        },
 
     }
-})
+});

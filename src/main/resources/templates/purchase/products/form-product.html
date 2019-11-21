@@ -1,144 +1,127 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
-<head>
+    <head>
     <div th:replace="fragments/head :: head"></div>
     <link rel="stylesheet" th:href="@{/css/product/add-product.css}">
     <link rel="stylesheet" th:href="@{/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 
-<!-- Site wrapper -->
-<div class="wrapper">
-    <div th:replace="fragments/header :: header"></div>
-    <div th:replace="fragments/menu :: menu"></div>
-    <div>
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <div th:replace="fragments/header :: header"></div>
+        <div th:replace="fragments/menu :: menu"></div>
+        <div>
 
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <h1>
-                    Producto
-                    <small>módulo de compras</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-                    <li><a href="#">Compras</a></li>
-                    <li class="active">Productos</li>
-                </ol>
-            </section>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>
+                        Producto
+                        <small>módulo de compras</small>
+                    </h1>
+                </section>
 
-            <!-- Main content -->
-            <section class="content">
+                <!-- Main content -->
+                <section id="product-form" class="content">
 
-                <!-- Default box -->
-                <div class="box">
-                    <div class="box-body">
-                        <div class="row">
-                            <form action="#" th:action="@{/purchase/products}" th:object="${product}" method="post"
-                                  enctype="multipart/form-data">
-                                <div class="col-lg-7">
+                    <!-- Default box -->
+                    <div class="box">
+                        <div class="box-body">
+                            <div>
+                                <form enctype="multipart/form-data">
+                                    <div class="col-lg-6">
 
+                                        <div class="form-group">
+                                            <div class="form-group has-feedback">
+                                                <label for="code">C&oacute;digo</label>
+                                                <input v-model="form.code" placeholder="c&oacute;digo" type="text" id="code" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group has-feedback">
+                                                <label for="product">Producto</label>
+                                                <input v-model="form.product" placeholder="Nombre de producto" type="text" id="product" class="form-control"/>
+                                            </div>
+                                        </div>
 
-                                    <input type="hidden" th:field="*{id}"/>
+                                        <div class="form-group">
+                                            <label for="brand">Marca</label>
+                                            <select class="form-control" id="brand" v-model="form.brand">
+                                                <option value="0">--SELECCIONE UNA MARCA--</option>
+                                                <option v-for="(brand, i) in brandList" :value="brand.id" v-text="brand.description"></option>
+                                            </select>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <div class="form-group has-feedback">
-                                            <label for="code">Código</label>
-                                            <input placeholder="0001" type="text" id="code" class="form-control"
-                                                   th:field="*{code}">
-                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></small>
+                                        <div class="form-group">
+                                            <div class="form-group has-feedback">
+                                                <label for="model">Modelo</label>
+                                                <input v-model="form.model" placeholder="Modelo" type="text" id="model" class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="category">Categor&iacute;a</label>
+                                            <select class="form-control" id="category" v-model="form.category">
+                                                <option value="0">--SELECCIONE UNA CATEGORÍA--</option>
+                                                <option v-for="(cat, i) in categoryList" :value="cat.id" v-text="cat.description"></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea v-model="form.comment" rows="3" class="form-control" placeholder="Comentario sobre el producto ejemplo => Increíble producto, ejoguana"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group" style="margin-top:1.6em;">
+                                            <button class="btn btn-primary active btn-sm input-div-container">Seleccione imagenes 
+                                                <i class="fa fa-file-image-o"></i>
+                                                <input class="input-file" type="file"
+                                                       accept=".jpg, .png, .jpeg"
+                                                       @change="selectImage"
+                                                       multiple/>
+                                            </button>
+                                        </div>
+                                        <div v-show="imageLength > 0" style="text-align: center;"><span class="badge label-primary" v-text="imageLength"></span></div>
+                                        <div class="form-group" style="margin-top: 1em;">
+                                            <div class="form-group has-feedback">
+                                                <ul class="list-group" v-if="imageLength > 0">
+                                                    <li class="list-group-item" v-for="imag in imageList" style="text-align: center;">
+                                                        <img class="img-thumbnail" style="width: 300px;height: 170px;" :src="imag">
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <div class="form-group has-feedback">
-                                            <label for="product">Producto</label>
-                                            <input placeholder="Lavarropa LG" type="text" id="product"
-                                                   class="form-control" th:field="*{productName}">
-                                            <small class="form-text text-danger" th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"></small>
-                                        </div>
+                                    <div class="col-lg-12">
+                                        <button @click.prevent="saveProduct" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
                                     </div>
+                                </form>
+                            </div>
 
-                                    <div class="form-group">
-                                        <label for="brand">Marca</label>
-                                        <select class="form-control" id="brand" th:field="*{brandId}">
-                                            <option value="0">--SELECCIONE UNA MARCA--</option>
-                                            <option  th:each="brand : ${brands}"
-                                                     th:value="${brand.id}"
-                                                     th:text="${brand.description}">
-                                            </option>
-                                        </select>
-                                        <small class="form-text text-danger" th:if="${#fields.hasErrors('brandId')}" th:errors="*{brandId}"></small>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form-group has-feedback">
-                                            <label for="model">Modelo</label>
-                                            <input placeholder="T-800" type="text" id="model" class="form-control"
-                                                   th:field="*{model}">
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label for="category">Categoría</label>
-                                        <select class="form-control" id="category" th:field="*{categoryId}">
-                                            <option value="0">--SELECCIONE UNA CATEGORÍA--</option>
-                                            <option th:each="category : ${categories}"
-                                                    th:value="${category.id}"
-                                                    th:text="${category.description}">
-                                            </option>
-                                        </select>
-                                        <small class="form-text text-danger" th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}"></small>
-                                    </div>
-                                    <div class="form-group">
-                                <textarea class="textarea" placeholder="Increíble producto, ejoguana"
-                                          th:field="*{description}"></textarea>
-                                        <small class="form-text text-danger" th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}"></small>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-5">
-                                    <div class="box-body">
-                                        <div id="imagePreview">
-                                            <img th:src="*{imageDB}" />
-                                        </div>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="imgupload" lang="es"
-                                                   th:field="*{file}">
-                                            <label class="custom-file-label" for="file">Seleccionar Archivo</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
-                                </div>
-                            </form>
                         </div>
-
                     </div>
-                </div>
-                <!-- /.box -->
+                    <!-- /.box -->
 
-            </section>
-            <!-- /.content -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+
         </div>
-        <!-- /.content-wrapper -->
-
+        <div th:replace="fragments/footer :: footer"></div>
+        <div class="control-sidebar-bg"></div>
     </div>
-    <div th:replace="fragments/footer :: footer"></div>
-    <div class="control-sidebar-bg"></div>
-</div>
-<!-- ./wrapper -->
-<div th:replace="fragments/head :: footer-js"></div>
-<script th:src="@{/js/product/add-product.js}"></script>
+    <!-- ./wrapper -->
+    <div th:replace="fragments/head :: footer-js"></div>
+    <script th:src="@{/js/product/add-product.js}"></script>
 
-<!-- Bootstrap WYSIHTML5 -->
-<script th:src="@{/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
-<script>
-    $(function () {$('.textarea').wysihtml5()});
-</script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <!--<script th:src="@{/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>-->
+    <!--<script>
+        $(function () {$('.textarea').wysihtml5()});
+    </script>-->
 
 </body>
 </html>

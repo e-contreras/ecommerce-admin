@@ -14,8 +14,11 @@ public class RequestConstant {
     /**
      *   Proveedores
      */
-    public static final String PURCHASE_PROVAIDER           = "/purchase/provider";
-    public static final String PROVAIDER_MAIN_PATH_RESOURCE = "purchase/provider/provider-index";
+    public static final String PURCHASE_PROVAIDER                    = "/purchase/provider";
+    public static final String PROVAIDER_MAIN_PATH_RESOURCE          = "purchase/provider/provider-index";
+    public static final String PURCHASE_PROVAIDER_FORM_NEW           = "/form-new";
+    public static final String PURCHASE_PROVAIDER_FORM_EDIT          = "/form-edit";
+    public static final String PURCHASE_PROVAIDER_FORM_PATH_RESOURCE = "purchase/provider/provider-form";
     
     /**
      * Cotizaciones

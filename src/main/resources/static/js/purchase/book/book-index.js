@@ -2,8 +2,8 @@ var vmBook = new Vue({
     el:'#book-index',
     data:{
         listBook:undefined,
-        from:new Date().toISOString().split('T')[0],
-        to:new Date().toISOString().split('T')[0]
+        from:"",
+        to:""
     },
     created(){
         
@@ -12,6 +12,10 @@ var vmBook = new Vue({
         
     },
     methods: {
+        toDay(){
+            let date = new Date();
+            return date.getFullYear().toString().concat("-").concat((date.getMonth()+1).toString()).concat("-").concat(date.getDate().toString());
+        }
     
     }
 });
