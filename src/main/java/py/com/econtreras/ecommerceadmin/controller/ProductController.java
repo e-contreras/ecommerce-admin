@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -54,23 +53,12 @@ public class ProductController {
     }
 
     @GetMapping(RequestConstant.PURCHASE_PRODUCT_FORM_EDIT)
-    public String edit(@RequestParam(name = "id", defaultValue = "0") Integer id, Model model){
-
-        if(id != 0){
-            model.addAttribute("product", productService.findById(id));
-        }else{
-            CategoryBean catBean = new CategoryBean();
-            BrandBean brandBean = new BrandBean();
-            ProductBean productBean = new ProductBean();
-            productBean.setBrand(brandBean);
-            productBean.setCategory(catBean);
-            model.addAttribute("product", productBean);
-        }
-
-        model.addAttribute("brands", brandService.findAll());
-        model.addAttribute("categories", categoryService.findAll());
-
-        return RequestConstant.PURCHASE_PRODUCT_FORM_VIEW;
+    public ModelAndView edit(@PathVariable(value = "id") Integer id){
+        ModelAndView mav = new ModelAndView(RequestConstant.PURCHASE_PRODUCT_FORM_VIEW);
+        mav.addObject("mode", "edit");
+        mav.addObject("is", id);
+        return mav;
+        
     }
 
     @PostMapping

@@ -35,10 +35,15 @@ var vmProductForm = new Vue({
         imageList: [],
         categoryList: [],
         brandList: [],
+        id: document.getElementById("product-data").value,
+        mode: document.getElementById("mode-form").value !== null && document.getElementById("mode-form").value !== undefined ? document.getElementById('mode-form').value : "",
     },
     created() {
         this.getCategory();
         this.getBrand();
+        if(this.mode==="edit"){
+            this.callServiceById();
+        }
     },
     computed: {
         imageLength() {
@@ -46,35 +51,6 @@ var vmProductForm = new Vue({
         },
     },
     methods: {
-        saveProduct() {
-            let formData = this.form;
-            let postRequest = {
-                bar_code: formData.brand,
-                category_id: formData.category,
-                code: formData.code,
-                description: formData.comment,
-                eraser: 0,
-                model: formData.model,
-                pictures: this.toListBytes(),
-                product_name: formData.product,
-                user_id: null
-            };
-            console.log('postRequest: ', postRequest);
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:8080/products",
-                headers: {
-                    'Accept': 'application/json',
-                },
-                data: postRequest,
-                success: function (data) {
-                    window.location.href = "../products";
-                }.bind(this),
-                error: function (data) {
-                    console.log("error", data);
-                }.bind(this)
-            });
-        },
         selectImage(e) {
             let file = e.target.files;
             if (file !== undefined && file.length > 0) {
@@ -130,6 +106,94 @@ var vmProductForm = new Vue({
                 newImgList.push(window.btoa(i));
             });
             return newImgList;
+        },
+        accordingToMode() {
+            if (this.mode === "edit") {
+                this.editMode();
+            } else {
+                this.saveMode();
+            }
+        },
+        editMode() {
+            let formData = this.form;
+            let putRequest = {
+                brand_id: formData.brand,
+                category_id: formData.category,
+                code: formData.code,
+                description: formData.comment,
+                eraser: 0,
+                model: formData.model,
+                pictures: window.btoa(this.imageList[0]),
+                product_name: formData.product,
+                user_id: 1
+            };
+            console.log('putRequest: ', putRequest);
+            $.ajax({
+                type: "PUT",
+                url: "http://localhost:8080/products",
+                contentType: "application/json",
+                headers: {
+                    accept: 'application/json',
+                },
+                data: putRequest,
+                success: function (data) {
+                    console.log(data);
+//                    window.location.href = "../products";
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
+        },
+        saveMode() {
+            let formData = this.form;
+            let postRequest = {
+                brand_id: formData.brand,
+                category_id: formData.category,
+                code: formData.code,
+                description: formData.comment,
+                eraser: 0,
+                model: formData.model,
+                pictures: window.btoa(this.imageList[0]),
+                product_name: formData.product,
+                user_id: 1
+            };
+            console.log('postRequest: ', postRequest);
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/products",
+                contentType: "application/json",
+                headers: {
+                    accept: 'application/json',
+                },
+                data: postRequest,
+                success: function (data) {
+                    console.log(data);
+//                    window.location.href = "../products";
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
+        },
+        callServiceById(){
+            let uri = "http://localhost:8080/products/" + this.id;
+            $.ajax({
+                type:"GET",
+                url: uri,
+                headers: { 'Access-Control-Allow-Origin': "http://localhost:8081" },
+                contentType: "application/json",
+                success: function (data) {
+                    this.setModelForm(data);
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
+        },
+        setModelForm(rs){
+            this.form.code = rs.code;
+            this.form.product = rs.product_name;
         }
     }
 });
