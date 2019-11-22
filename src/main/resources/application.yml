@@ -9,8 +9,8 @@ spring:
     show-sql: true
   datasource:
     url: jdbc:mysql://localhost:3306/econtreras
-    username: econtreras_user
-    password: abcd.123
+    username: root
+    password: root
   jackson:
     default-property-inclusion: NON_NULL
   servlet:
@@ -40,7 +40,7 @@ spring:
     username: enriquev.rodriguez@gmail.com
     password: 'Mi#es064'
 file:
-    upload-dir: /home/enrique/uploads
+    upload-dir: /tmp/uploads
 api:
   messages:
     already-exist: El departamento que intenta agregar ya existe!
