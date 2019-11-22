@@ -3,6 +3,7 @@ package py.com.econtreras.ecommerceadmin.controller;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import py.com.econtreras.ecommerceadmin.util.RequestConstant;
@@ -26,6 +27,15 @@ public class ProviderController {
     public ModelAndView getFormViewProduct(){
         ModelAndView mav = new ModelAndView("general");
         mav.addObject("piece", RequestConstant.PURCHASE_PROVAIDER_FORM_PATH_RESOURCE);
+        return mav;
+    }
+    
+    @GetMapping(RequestConstant.PURCHASE_PROVAIDER_FORM_EDIT)
+    public ModelAndView getFormViewEdit(@PathVariable(value="id")Integer id){
+        ModelAndView mav = new ModelAndView("general");
+        mav.addObject("piece", RequestConstant.PURCHASE_PROVAIDER_FORM_PATH_RESOURCE);
+        mav.addObject("mode", "edit");
+        mav.addObject("is", id);
         return mav;
     }
 }

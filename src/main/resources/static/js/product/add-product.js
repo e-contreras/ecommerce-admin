@@ -1,26 +1,3 @@
-//function readURL(input) {
-//    if (input.files && input.files[0]) {
-//        var reader = new FileReader();
-//
-//        reader.onload = function(e) {
-//            if($('#imagePreview img').length){
-//                $('#imagePreview img').attr("src", e.target.result);
-//            }else{
-//                $('#imagePreview').append($("<img>",{
-//                    src: e.target.result,
-//                    class: "img-responsive pad"
-//                }));
-//            }
-//
-//        }
-//
-//        reader.readAsDataURL(input.files[0]);
-//    }
-//}
-//
-//$("#imgupload").change(function() {
-//    readURL(this);
-//});
 var vmProductForm = new Vue({
     el: '#product-form',
     data: {
@@ -48,7 +25,7 @@ var vmProductForm = new Vue({
     computed: {
         imageLength() {
             return this.imageList.length;
-        },
+        }
     },
     methods: {
         selectImage(e) {
@@ -107,6 +84,13 @@ var vmProductForm = new Vue({
             });
             return newImgList;
         },
+        toImageData(imageList){
+          let images = [];
+          imageList.forEach(e => {
+              images.push(window.atob(e));
+          });
+          return images;
+        },
         accordingToMode() {
             if (this.mode === "edit") {
                 this.editMode();
@@ -153,8 +137,9 @@ var vmProductForm = new Vue({
                 code: formData.code,
                 description: formData.comment,
                 eraser: 0,
+                impuesto:10,
                 model: formData.model,
-                pictures: window.btoa(this.imageList[0]),
+                pictures: this.toListBytes(),
                 product_name: formData.product,
                 user_id: 1
             };
@@ -162,11 +147,13 @@ var vmProductForm = new Vue({
             $.ajax({
                 type: "POST",
                 url: "http://localhost:8080/products",
-                contentType: "application/json",
+                contentType: "application/json; charset=utf-8",
+                dataType:"json",
+                crossDomain: true,
                 headers: {
-                    accept: 'application/json',
+                    Accept: 'application/json',
                 },
-                data: postRequest,
+                data: JSON.stringify(postRequest),
                 success: function (data) {
                     console.log(data);
 //                    window.location.href = "../products";
@@ -194,6 +181,10 @@ var vmProductForm = new Vue({
         setModelForm(rs){
             this.form.code = rs.code;
             this.form.product = rs.product_name;
+            this.form.comment = rs.descripcion;
+            this.form.brand = rs.marca.id;
+            this.form.category = rs.categoria.id;
+            this.imageList = this.toImageData(rs.imagenes);
         }
     }
 });

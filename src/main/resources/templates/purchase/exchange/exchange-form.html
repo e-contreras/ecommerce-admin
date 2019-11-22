@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
     <div id="provider-form">
         <input type="hidden" id="mode-form" th:value="${mode}"/> 
-        <input type="hidden" id="provider-data" th:value="${is}"/> 
+        <input type="hidden" id="exchange-data" th:value="${is}"/> 
         <section class="content-header">
             <h1>
-                Proveedores
+                Cotizaci&oacute;n
                 <small>llene los campos</small>
             </h1>
         </section>
@@ -80,7 +80,6 @@
                                 <i class="fa fa-file-image-o"></i>
                                 <input class="input-file" type="file"
                                        accept=".jpg, .png, .jpeg"
-                                       @change="getSelectImage"
                                        multiple/>
                             </button>
                         </div>
@@ -92,5 +91,5 @@
             </form>
         </div>
     </div>
-    <script th:src="@{/js/purchase/provider/provider-form.js}"></script>
+    <script th:src="@{/js/purchase/exchange/provider-form.js}"></script>
 </html>

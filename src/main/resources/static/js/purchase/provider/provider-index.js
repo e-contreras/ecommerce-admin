@@ -1,25 +1,15 @@
-var list = [{rs: "3 V - INGENIERIA S.A.", ruc: "80019709-1", persona: "ADOLFO VERA ALDERETE - JUAN MANUEL VERA CAMPUZANO.", direccion: "R. I. 5 GRAL. DÍAZ N° 351 C/ CAMPO CERVERA.", email: "elvio@108.com", telefono: "021 665 177"},
-    {rs: "3 V - INGENIERIA S.A.", ruc: "80019709-2", persona: "ADOLFO VERA ALDERETE - JUAN MANUEL VERA CAMPUZANO.", direccion: "R. I. 5 GRAL. DÍAZ N° 351 C/ CAMPO CERVERA.", email: "elvio@108.com", telefono: "021 665 177"},
-{rs: "3 V - INGENIERIA S.A.", ruc: "80019709-3", persona: "ADOLFO VERA ALDERETE - JUAN MANUEL VERA CAMPUZANO.", direccion: "R. I. 5 GRAL. DÍAZ N° 351 C/ CAMPO CERVERA.", email: "elvio@108.com", telefono: "021 665 177"},
-{rs: "3 V - INGENIERIA S.A.", ruc: "80019709-4", persona: "ADOLFO VERA ALDERETE - JUAN MANUEL VERA CAMPUZANO.", direccion: "R. I. 5 GRAL. DÍAZ N° 351 C/ CAMPO CERVERA.", email: "elvio@108.com", telefono: "021 665 177"},
-{rs: "3 V - INGENIERIA S.A.", ruc: "80019709-5", persona: "ADOLFO VERA ALDERETE - JUAN MANUEL VERA CAMPUZANO.", direccion: "R. I. 5 GRAL. DÍAZ N° 351 C/ CAMPO CERVERA.", email: "elvio@108.com", telefono: "021 665 177"},
-{rs: "3 V - INGENIERIA S.A.", ruc: "80019709-6", persona: "ADOLFO VERA ALDERETE - JUAN MANUEL VERA CAMPUZANO.", direccion: "R. I. 5 GRAL. DÍAZ N° 351 C/ CAMPO CERVERA.", email: "elvio@108.com", telefono: "021 665 177"},
-{rs: "3 V - INGENIERIA S.A.", ruc: "80019709-7", persona: "ADOLFO VERA ALDERETE - JUAN MANUEL VERA CAMPUZANO.", direccion: "R. I. 5 GRAL. DÍAZ N° 351 C/ CAMPO CERVERA.", email: "elvio@108.com", telefono: "021 665 177"},
-{rs: "3 V - INGENIERIA S.A.", ruc: "80019709-8", persona: "ADOLFO VERA ALDERETE - JUAN MANUEL VERA CAMPUZANO.", direccion: "R. I. 5 GRAL. DÍAZ N° 351 C/ CAMPO CERVERA.", email: "elvio@108.com", telefono: "021 665 177"},
-{rs: "3 V - INGENIERIA S.A.", ruc: "80019709-9", persona: "ADOLFO VERA ALDERETE - JUAN MANUEL VERA CAMPUZANO.", direccion: "R. I. 5 GRAL. DÍAZ N° 351 C/ CAMPO CERVERA.", email: "elvio@108.com", telefono: "021 665 177"},
-{rs: "3 V - INGENIERIA S.A.", ruc: "80019709-0", persona: "ADOLFO VERA ALDERETE - JUAN MANUEL VERA CAMPUZANO.", direccion: "R. I. 5 GRAL. DÍAZ N° 351 C/ CAMPO CERVERA.", email: "elvio@108.com", telefono: "021 665 177"},
-{rs: "3 V - INGENIERIA S.A.", ruc: "80019709-1", persona: "ADOLFO VERA ALDERETE - JUAN MANUEL VERA CAMPUZANO.", direccion: "R. I. 5 GRAL. DÍAZ N° 351 C/ CAMPO CERVERA.", email: "elvio@108.com", telefono: "021 665 177"}]
-
 var vmProvider = new Vue({
     el: '#provider-index',
     data: {
-        listProvider: list,
+        listProvider: [],
         valuePages: [],
         itemPerPages: 10,
-        currentPage: 1
+        currentPage: 1,
+        modalMessage:"",
+        idProduct:0
     },
     created() {
-        this.filterItems();
+        this.getProvider();
     },
     computed: {
         getLength() {
@@ -65,15 +55,38 @@ var vmProvider = new Vue({
                 url: "http://localhost:8080/providers",
                 cache: false,
                 headers: {
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                 },
                 success: function (data) {
-                    console.log("success");
+                    this.listProvider = data;
+                    this.filterItems();
                     console.log(data);
                 }.bind(this),
                 error: function (data) {
                     console.log("error");
                     console.log(data);
+                }.bind(this)
+            });
+        },
+        toEdit(id){
+            window.location = "./provider/form-edit/" + id;
+        },
+        setIdRemove(provider) {
+            this.idProduct = provider;
+            this.modalMessage = "a " + provider.name+" "+provider.lastname;
+        },
+        remove() {
+            let uri = "http://localhost:8080/providers/" + this.idProduct.id;
+            $.ajax({
+                type: 'DELETE',
+                url: uri,
+                success: function (res) {
+                    window.setTimeout(function () {
+                        window.location.href = "./provider";
+                    }, 1000);
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
                 }.bind(this)
             });
         },

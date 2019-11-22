@@ -17,14 +17,17 @@ public class RequestConstant {
     public static final String PURCHASE_PROVAIDER                    = "/purchase/provider";
     public static final String PROVAIDER_MAIN_PATH_RESOURCE          = "purchase/provider/provider-index";
     public static final String PURCHASE_PROVAIDER_FORM_NEW           = "/form-new";
-    public static final String PURCHASE_PROVAIDER_FORM_EDIT          = "/form-edit";
+    public static final String PURCHASE_PROVAIDER_FORM_EDIT          = "/form-edit/{id}";
     public static final String PURCHASE_PROVAIDER_FORM_PATH_RESOURCE = "purchase/provider/provider-form";
     
     /**
      * Cotizaciones
      */
-    public static final String PURCHASE_EXCHANGE           = "/purchase/exchange";
-    public static final String EXCHANGE_MAIN_PATH_RESOURCE = "purchase/exchange/exchange-index";
+    public static final String PURCHASE_EXCHANGE                    = "/purchase/exchange";
+    public static final String EXCHANGE_MAIN_PATH_RESOURCE          = "purchase/exchange/exchange-index";
+    public static final String PURCHASE_EXCHANGE_FORM_NEW           = "/form-new";
+    public static final String PURCHASE_EXCHANGE_FORM_EDIT          = "/form-edit/{id}";
+    public static final String PURCHASE_EXCHANGE_FORM_PATH_RESOURCE = "purchase/exchange/exchange-form";
     
     /**
      * Nota de Remisión

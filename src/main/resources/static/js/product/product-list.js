@@ -2,6 +2,8 @@ var vmProduactApp = new Vue({
     el: '#product-app-index',
     data: {
         listProduct: [],
+        modalMessage: "",
+        idProduct: {},
         valuePages: [],
         itemPerPages: 10,
         currentPage: 1
@@ -41,7 +43,7 @@ var vmProduactApp = new Vue({
             this.valuePages = [];
             for (var index = indexFrom; index < indexTo; index++) {
                 if (index < this.getLength) {
-                    if (this.listProduct[index] != undefined) {
+                    if (this.listProduct[index] !== undefined) {
                         this.valuePages.push(this.listProduct[index]);
                     }
                 }
@@ -55,7 +57,13 @@ var vmProduactApp = new Vue({
                     'Accept': 'application/json',
                 },
                 success: function (data) {
-                    this.listProduct = data;
+                    let rs = [];
+                    for(let i = 0 ; i < data.length ; i++){
+                        if(data[i].estado===0){
+                            rs.push(data[i]);
+                        }
+                    }
+                    this.listProduct = rs;
                     this.filterItems();
                 }.bind(this),
                 error: function (data) {
@@ -63,9 +71,28 @@ var vmProduactApp = new Vue({
                 }.bind(this)
             });
         },
-        toEdit(id){
-            window.location = "./products/form-edit/".concat(id.toString());
+        toEdit(id) {
+            window.location = "./products/form-edit/" + id;
+        },
+        setIdRemove(product) {
+            this.idProduct = product;
+            this.modalMessage = product.product_name;
+        },
+        remove() {
+            let uri = "http://localhost:8080/products/" + this.idProduct.id;
+            $.ajax({
+                type: 'DELETE',
+                url: uri,
+                success: function (res) {
+                    window.setTimeout(function () {
+                        window.location.href = "./products";
+                    }, 1000);
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
         }
-        
+
     }
 });

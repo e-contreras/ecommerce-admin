@@ -20,25 +20,23 @@
                 <thead>
                     <tr>
                         <th>Raz&oacute;n SOCIAL</th>
-                        <th>RUC</th>
-                        <th>Persona cont.</th>
-                        <th>Direcci&oacute;n</th>
+                        <th>Nro. documento</th>
+                        <th>Fecha</th>
+                        <th>Nombre</th>
                         <th>Email</th>
-                        <th>Tel&eacute;fono</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(provider, index) in valuePages" :key="index">
-                        <td>{{provider.rs}}</td>
-                        <td>{{provider.ruc}}</td>
-                        <td>{{provider.persona}}</td>
-                        <td>{{provider.direccion}}</td>
+                        <td>{{provider.business_name}}</td>
+                        <td>{{provider.document_number}}</td>
+                        <td>{{provider.birthday}}</td>
+                        <td>{{provider.name+' '+provider.lastname}}</td>
                         <td>{{provider.email}}</td>
-                        <td>{{provider.telefono}}</td>
                         <td style="text-align: center;">
-                            <button class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
-                            <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                            <button @click="toEdit(provider.id)" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
+                            <button @click.prevent="setIdRemove(provider)" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-confirmation"><i class="fa fa-trash"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -53,6 +51,7 @@
                 </div>
             </div>
         </div>
+        <template th:replace="modal/modal"></template>
     </div>
     <script th:src="@{/js/purchase/provider/provider-index.js}"></script>
 </html>

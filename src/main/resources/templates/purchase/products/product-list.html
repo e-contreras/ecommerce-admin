@@ -11,9 +11,9 @@
     <div class="wrapper">
         <div th:replace="fragments/header::header"></div>
         <div th:replace="fragments/menu::menu"></div>
-        <div>
+        <div id="product-app-index">
             <!-- Content Wrapper. Contains page content -->
-            <div id="product-app-index" class="content-wrapper">
+            <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
@@ -46,13 +46,13 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="(product, index) in valuePages" :key="index">
-                                        <td v-text="product.id"></td>
+                                        <td v-text="product.code"></td>
                                         <td v-text="product.product_name"></td>
-                                        <td v-text="product.brand===undefined ? 'Ninguna' : product.brand"></td>
-                                        <td v-text="product.category===undefined ? 'Ninguna' : product.category"></td>
+                                        <td v-text="product.marca===undefined ? 'Ninguna' : product.marca.description"></td>
+                                        <td v-text="product.categoria===undefined ? 'Ninguna' : product.categoria.description"></td>
                                         <td>
-                                            <button @click="toEdit(product.id)" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
-                                            <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                            <button @click.precent="toEdit(product.id)" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
+                                            <button @click.precent="setIdRemove(product)" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-confirmation"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -68,17 +68,15 @@
                             </div>
                         </div>
                     </div>
-
                 </section>
             </div>
-            <script th:src="@{/js/product/product-list.js}"></script>
+            <template th:replace="modal/modal"></template>
         </div>
+        <script th:src="@{/js/product/product-list.js}"></script>
         <div th:replace="fragments/footer :: footer"></div>
         <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
     <div th:replace="fragments/head::footer-js"></div>
-    <script th:src="@{/bower_components/datatables.net/js/jquery.dataTables.min.js}"></script>
-    <script th:src="@{/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
 </body>
 </html>
