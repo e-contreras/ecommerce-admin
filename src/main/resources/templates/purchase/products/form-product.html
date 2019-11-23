@@ -70,6 +70,15 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
+                                            <label for="category">Impuesto</label>
+                                            <select class="form-control" id="category" v-model="form.iva">
+                                                <option :value="10">--SELECCIONE UN IMPUESTO--</option>
+                                                <option :value="0">SIN IVA</option>
+                                                <option :value="5">IVA DEL 5%</option>
+                                                <option :value="10">IVA DEL 10%</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <textarea v-model="form.comment" rows="3" class="form-control" placeholder="Comentario sobre el producto ejemplo => Increíble producto, ejoguana"></textarea>
                                         </div>
                                     </div>

@@ -117,7 +117,7 @@ var vmProviderForm = new Vue({
                 document_number: "string",
                 document_type_id: 0,
                 email: "string",
-                id: 0,
+                id: this.id,
                 lastname: "string",
                 name: "string",
                 person: {

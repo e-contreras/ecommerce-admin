@@ -7,7 +7,8 @@ var vmProductForm = new Vue({
             brand: 0,
             model: "",
             category: 0,
-            comment: ""
+            comment: "",
+            iva: 10
         },
         imageList: [],
         categoryList: [],
@@ -106,8 +107,9 @@ var vmProductForm = new Vue({
                 code: formData.code,
                 description: formData.comment,
                 eraser: 0,
+                id:this.id,
                 model: formData.model,
-                pictures: window.btoa(this.imageList[0]),
+                pictures: this.toListBytes(),
                 product_name: formData.product,
                 user_id: 1
             };
@@ -122,7 +124,7 @@ var vmProductForm = new Vue({
                 data: putRequest,
                 success: function (data) {
                     console.log(data);
-//                    window.location.href = "../products";
+                    window.location.href = "../products";
                 }.bind(this),
                 error: function (data) {
                     console.log("error", data);
@@ -137,7 +139,7 @@ var vmProductForm = new Vue({
                 code: formData.code,
                 description: formData.comment,
                 eraser: 0,
-                impuesto:10,
+                impuesto:formData.iva,
                 model: formData.model,
                 pictures: this.toListBytes(),
                 product_name: formData.product,
@@ -156,7 +158,7 @@ var vmProductForm = new Vue({
                 data: JSON.stringify(postRequest),
                 success: function (data) {
                     console.log(data);
-//                    window.location.href = "../products";
+                    window.location.href = "../products";
                 }.bind(this),
                 error: function (data) {
                     console.log("error", data);
