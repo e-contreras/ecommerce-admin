@@ -35,6 +35,7 @@ public class ExchangeController {
         ModelAndView mav = new ModelAndView("general");
         mav.addObject("piece", RequestConstant.PURCHASE_EXCHANGE_FORM_PATH_RESOURCE);
         mav.addObject("is", id);
+        mav.addObject("mode", "edit");
         return mav;
     }
     

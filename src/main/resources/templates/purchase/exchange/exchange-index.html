@@ -20,24 +20,22 @@
             <table id="exchange" class="table table-hover">
                 <thead>
                     <tr>
-                        <th>C&oacute;digo</th>
                         <th>Decripci&oacute;n</th>
-                        <th>Categor&iacute;a</th>
-                        <th>F. publicaci&oacute;n</th>
+                        <th>Fecha inicio</th>
+                        <th>Fecha fin</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(exchange, index) in valuePages" :key="index">
-                        <td>{{exchange.cod}}</td>
                         <td>{{exchange.description}}</td>
-                        <td>{{exchange.category}}</td>
-                        <td>{{exchange.fPublication}}</td>
-                        <td><span :class="'label ' + classState(exchange.state)">{{exchange.state}}</span></td>
+                        <td>{{exchange.initDate}}</td>
+                        <td>{{exchange.endDdate}}</td>
+                        <td><span :class="'label ' + classState(exchange.state)">{{exchange.status}}</span></td>
                         <td>
-                            <button class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
-                            <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                            <button @click="toEdit(exchange.id)" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
+                            <button @click="setIdRemove(exchange)" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-confirmation"><i class="fa fa-trash"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -52,6 +50,7 @@
                 </div>
             </div>
         </div>
+        <template th:replace="modal/modal"></template>
     </div>
     <script th:src="@{/js/purchase/exchange/exchange-index.js}"></script>
 </html>

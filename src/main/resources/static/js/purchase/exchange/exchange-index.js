@@ -1,25 +1,15 @@
-var list = [{cod: 1, description: "Pedido de Placares", category: "Electrodméstico", fPublication: "12-03-19", state: "CERRADO"},
-    {cod: 2, description: "Pedido de Bicicletas", category: "Deportes", fPublication: "11-05-19", state: "ABIERTO"},
-    {cod: 3, description: "Pedido de Bicicletas", category: "Deportes", fPublication: "11-05-19", state: "CERRADO"},
-    {cod: 4, description: "Pedido de Bicicletas", category: "Deportes", fPublication: "11-05-19", state: "CREADO"},
-    {cod: 5, description: "Pedido de Bicicletas", category: "Deportes", fPublication: "11-05-19", state: "FINALIZADO"},
-    {cod: 6, description: "Pedido de Bicicletas", category: "Deportes", fPublication: "11-05-19", state: "CREADO"},
-    {cod: 7, description: "Pedido de Bicicletas", category: "Deportes", fPublication: "11-05-19", state: "ABIERTO"},
-    {cod: 8, description: "Pedido de Bicicletas", category: "Deportes", fPublication: "11-05-19", state: "FINALIZADO"},
-    {cod: 9, description: "Pedido de Bicicletas", category: "Deportes", fPublication: "11-05-19", state: "ABIERTO"},
-    {cod: 10, description: "Pedido de Bicicletas", category: "Deportes", fPublication: "11-05-19", state: "CREADO"},
-    {cod: 11, description: "Pedido de Bicicletas", category: "Deportes", fPublication: "11-05-19", state: "ABIERTO"}]
-
 var vmExchange = new Vue({
     el: '#exchange-index',
     data: {
-        listExchange: list,
+        listExchange: [],
         valuePages: [],
         itemPerPages: 10,
-        currentPage: 1
+        currentPage: 1,
+        modalMessage:"",
+        idExchange:0
     },
     created() {
-        this.filterItems();
+        
     },
     computed: {
         getLength() {
@@ -54,13 +44,34 @@ var vmExchange = new Vue({
             this.valuePages = [];
             for (var index = indexFrom; index < indexTo; index++) {
                 if (index < this.getLength) {
-                    if (this.listExchange[index] != undefined) {
+                    if (this.listExchange[index] !== undefined) {
                         this.valuePages.push(this.listExchange[index]);
                     }
                 }
             }
         },
-
+        getBugetSolicitude(){
+        	let uri = "http://localhost:8080/buget/solicitude";
+        	$.ajax({
+                url: uri,
+                headers: {
+                    'Accept': 'application/json',
+                    'Access-Control-Allow-Origin': 'http://localhost:8081',
+                    'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
+                    'Access-Control-Request-Method': 'GET',
+                    'Access-Control-Allow-Credentials': 'true',
+                    'Access-Control-Allow-Headers': 'X-PINGOTHER'
+                },
+                success: function (data) {
+                    this.listExchange = data;
+                    this.filterItems();
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
+        	
+        },
         classState: function (state) {
             switch (state.toUpperCase()) {
                 case "CERRADO":
@@ -74,6 +85,31 @@ var vmExchange = new Vue({
                 default:
                     return "";
             }
-        }
+        },
+        
+        toEdit(id){
+            window.location = "./exchange/form-edit/" + id;
+        },
+        
+        setIdRemove(exchange) {
+            this.idExchange = exchange.id;
+            this.modalMessage = "el " + exchange.description;
+        },
+        
+        remove() {
+            let uri = "http://localhost:8080/buget/solicitude/" + this.idExchange;
+            $.ajax({
+                type: 'DELETE',
+                url: uri,
+                success: function (res) {
+                    window.setTimeout(function () {
+                        window.location.href = "./exchange";
+                    }, 1000);
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
+        },
     }
 });

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
-    <div id="provider-form">
+    <div id="exchange-form">
         <input type="hidden" id="mode-form" th:value="${mode}"/> 
         <input type="hidden" id="exchange-data" th:value="${is}"/> 
         <section class="content-header">
@@ -14,76 +14,54 @@
             <form action="#" method="post" enctype="multipart/form-data">
                 <div class="col-md-6">
                     <div class="form-group row">
-                        <label for="firstName" class="col-sm-2 col-form-label">Nombre:</label>
+                        <label for="category" class="col-sm-2 col-form-label">Categoria:</label>
                         <div class="col-sm-10">
-                            <input v-model="form.firsName" type="text" class="form-control" id="firstName" placeholder="Nombre"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="razon-social" class="col-sm-2 col-form-label">Raz. social:</label>
-                        <div class="col-sm-10">
-                            <input v-model="form.businessName" type="text" class="form-control" id="razon-social" placeholder="Raz&oacute;n Social"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="fecha-nacimiento" class="col-sm-2 col-form-label">Fecha nacimiento:</label>
-                        <div class="col-sm-10">
-                            <input v-model="form.birthDate" type="date" class="form-control" id="fecha-nacimiento"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="e-mail" class="col-sm-2 col-form-label">E-mail:</label>
-                        <div class="col-sm-10">
-                            <input v-model="form.email" type="email" class="form-control" id="e-mail" placeholder="Direcci&oacute;n de correo electronico"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="telepohone" class="col-sm-2 col-form-label">Telefono:</label>
-                        <div class="col-sm-10">
-                            <input v-model="form.telephone" type="number" class="form-control" id="telephone"/>
-                        </div>
-                    </div>
-                </div>
-                <!--columna 2-->
-                <div class="col-md-6">
-                    <div class="form-group row">
-                        <label for="lastName" class="col-sm-2 col-form-label">Apellido:</label>
-                        <div class="col-sm-10">
-                            <input v-model="form.lastName" type="text" class="form-control" id="lastName" placeholder="Apellido"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Tipo documento:</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" v-model="form.docType">
-                                <option value="0">Seleccione tipo de documento</option>
-                                <option v-for="(doc, i) in documentList" :value="doc.id" v-text="doc.description"></option>
+                            <select id="category" class="form-control" v-model="form.category">
+                            	<option value="0">--Seleccione categoria--</option>
+                                <option v-for="(cat, i) in categoryList" :value="cat.id" v-text="cat.description"></option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="dir-par" class="col-sm-2 col-form-label">Direcci&oacute;n particular:</label>
+                        <label for="publication-date" class="col-sm-2 col-form-label">Fecha inicio:</label>
                         <div class="col-sm-10">
-                            <input v-model="form.homeAddress" type="text" class="form-control" id="dir-par" placeholder="Direcci&oacute;n particular"/>
+                            <input v-model="form.startDate" type="date" class="form-control" id="publication-date"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="dir-lab" class="col-sm-2 col-form-label">Direcci&oacute;n laboral:</label>
+                        <label for="end-date" class="col-sm-2 col-form-label">Fecha fin:</label>
                         <div class="col-sm-10">
-                            <input v-model="form.workAddress" type="text" class="form-control" id="dir-lab" placeholder="Direcci&oacute;n laboral"/>
+                            <input v-model="form.endDate" type="date" class="form-control" id="end-date"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="dir-lab" class="col-sm-2 col-form-label">Imagen:</label>
+                        <label for="status" class="col-sm-2 col-form-label">Estado:</label>
                         <div class="col-sm-10">
-                            <button class="btn btn-primary active btn-sm input-div-container">Seleccione una imagen 
-                                <i class="fa fa-file-image-o"></i>
-                                <input class="input-file" type="file"
-                                       accept=".jpg, .png, .jpeg"
-                                       multiple/>
-                            </button>
+                            <select id="status" class="form-control" v-model="form.status">
+                                <option value="0">--SELECCIONE UN ESTADO--</option>
+                                <option v-for="(state, i) in stateList" :value="state.value" v-text="state.value"></option>
+                            </select>
                         </div>
                     </div>
+                    <div class="form-group row">
+                    	<label for="status" class="col-sm-2 col-form-label">Descripci&oacute;n</label>
+                    	<div class="col-sm-10">
+                    		<textarea v-model="form.description" rows="3" class="form-control" placeholder="Una descripci&oacute;n"></textarea>
+                    	</div>
+                    </div>
+                 </div>
+                <!--columna 2-->
+                <div class="col-md-6" style="display: inline-flex;height: 14em;overflow-x: scroll;overflow-y:hidden;">
+                    <div v-for="(pro, i) in productList" :key="i" class="picture-box">
+                    		<div>
+                    			<img v-if="pro.img !== undefined" style="width: 100px; height: 100px; border-radius: .4em;margin-top:.4em;" :src="pro.img" >
+                    			<i v-else class="fa fa-sticky-note-o" aria-hidden="true" style="font-size:7.3em;"></i>
+                    		</div>
+                    		<div style="margin-bottom:.4em">
+                    			<span style="font-size:.8em;" v-text="pro.name"></span>
+                    			<span><input type="checkbox" v-model="pro.select"/></span>
+                    		</div>
+					</div>
                 </div>
                 <div class="col-md-12">
                     <button @click.prevent="accordingToMode" class="btn btn-primary btn-sm input-div-container"><i class="fa fa-floppy-o"></i> Guardar</button>
@@ -91,5 +69,5 @@
             </form>
         </div>
     </div>
-    <script th:src="@{/js/purchase/exchange/provider-form.js}"></script>
+    <script th:src="@{/js/purchase/exchange/exchange-form.js}"></script>
 </html>

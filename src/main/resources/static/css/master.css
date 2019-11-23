@@ -21,3 +21,14 @@
     height: 100%;
     opacity: 0;
 }
+.picture-box{
+	height: fit-content;
+	padding-right: .5em;
+	padding-left: .5em;
+}
+.picture-box:hover {
+	cursor: pointer;
+	background: #f8f9fa!important;
+	border: 1px solid #6c757d;
+	border-radius: .5em;
+}

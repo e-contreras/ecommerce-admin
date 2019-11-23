@@ -1,26 +1,61 @@
 var vmExchange = new Vue({
-    el:'#',
+    el:'#exchange-form',
     data:{
         form: {
-            firsName: "",
-            lastName: "",
-            businessName: "",
-            docType: 0,
-            birthDate: undefined,
-            homeAddress: "",
-            email: "",
-            workAddress: "",
-            telephone: 0,
+            category: 0,
+            startDate: undefined,
+            endDate: undefined,
+            status: 0,
+            description:""
         },
-        id: document.getElementById("exchange-data").value,
+        categoryList:[],
+        profuctDataList:[],
+        productList:[],
+        stateList:[{key:1, value:"ABIERTO"},{key:2, value:"CREADO"},{key:3, value:"FINALIZADO"},{key:4, value:"CERRADO"}],
+        id: document.getElementById("exchange-data").value === "" ? 0 : document.getElementById("exchange-data").value,
         mode: document.getElementById("mode-form").value !== null && document.getElementById("mode-form").value !== undefined ? document.getElementById('mode-form').value : ""
     },
     created() {
         if (this.mode === "edit") {
             this.callServiceById();
         }
+        this.getProductList();
+        this.getCategory();
     },
     methods : {
+    	getCategory(){
+    		$.ajax({
+                url: "http://localhost:8080/categories",
+                cache: true,
+                headers: {
+                    'Accept': 'application/json',
+                },
+                success: function (data) {
+                    this.categoryList = data;
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
+    	},
+    	getProductList(){
+    		$.ajax({
+                url: "http://localhost:8080/products",
+                cache: true,
+                headers: {
+                    'Accept': 'application/json',
+                },
+                success: function (data) {
+                	if(data !== undefined && data!==null){
+                		this.profuctDataList = data; 
+                		this.productList = this.productConverter(data);
+                	}
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
+    	},
         accordingToMode() {
             if (this.mode === "edit") {
                 this.editMode();
@@ -51,44 +86,25 @@ var vmExchange = new Vue({
         editMode() {
             let formData = this.form;
             let putRequest = {
-                birthday: "2019-11-22T03:13:00.522Z",
-                business_name: "string",
-                cellphone: "string",
-                document_number: "string",
-                document_type_id: 0,
-                email: "string",
-                id: 0,
-                lastname: "string",
-                name: "string",
-                person: {
-                    birthday: "2019-11-22T03:13:00.522Z",
-                    business_name: "string",
-                    cellphone: "string",
-                    document_number: "string",
-                    document_type_id: 0,
-                    email: "string",
-                    lastname: "string",
-                    name: "string",
-                    person_id: 0,
-                    person_type_id: 0,
-                    phone: "string"
-                },
-                person_id: 0,
-                person_type_id: 0,
-                phone: "string"
+        		category: formData.category,
+        	    description: formData.description,
+        	    endDate: this.buildDate(formData.endDate),
+        	    initDate: this.buildDate(formData.startDate),
+        	    status: formData.status,
+        	    products: this.loadProductForSave()
             };
             console.log('putRequest: ', putRequest);
             $.ajax({
                 type: "PUT",
-                url: "http://localhost:8080/exchange",
+                url: "http://localhost:8080/buget/solicitude",
                 contentType: "application/json",
                 headers: {
                     accept: 'application/json',
                 },
                 data: putRequest,
                 success: function (data) {
-                    console.log(data);
-//                    window.location.href = "../exchange";
+                	this.setData(data);
+                    window.location.href = "../exchange";
                 }.bind(this),
                 error: function (data) {
                     console.log("error", data);
@@ -96,39 +112,20 @@ var vmExchange = new Vue({
             });
         },
         saveMode() {
-            let formData = this.form;
+            let formData = this.form; 
             let postRequest = {
-                birthday: "2019-11-22T03:13:00.522Z",
-                business_name: "string",
-                cellphone: "string",
-                document_number: "string",
-                document_type_id: 0,
-                email: "string",
-                id: 0,
-                lastname: "string",
-                name: "string",
-                person: {
-                    birthday: "2019-11-22T03:13:00.522Z",
-                    business_name: "string",
-                    cellphone: "string",
-                    document_number: "string",
-                    document_type_id: 0,
-                    email: "string",
-                    lastname: "string",
-                    name: "string",
-                    person_id: 0,
-                    person_type_id: 0,
-                    phone: "string"
-                },
-                person_id: 0,
-                person_type_id: 0,
-                phone: "string"
+        		category: formData.category,
+        	    description: formData.description,
+        	    endDate: this.buildDate(formData.endDate),
+        	    initDate: this.buildDate(formData.startDate),
+        	    status: formData.status,
+        	    products: this.loadProductForSave()
             };
             console.log('postRequest: ', postRequest);
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/exchange",
-                contentType: "application/json charset=utf-8",
+                url: "http://localhost:8080/buget/solicitude",
+                contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 crossDomain: 'true',
                 headers: {
@@ -137,12 +134,72 @@ var vmExchange = new Vue({
                 data: JSON.stringify(postRequest),
                 success: function (data) {
                     console.log(data);
-//                    window.location.href = "../products";
+                    window.location.href = "../exchange";
                 }.bind(this),
                 error: function (data) {
                     console.log("error", data);
                 }.bind(this)
             });
+        },
+        productConverter(data){
+        	let newProductList = [];
+        	data.forEach(e => {
+        		let img = {id:e.id, name:e.product_name, img:e.imagenes.length > 0 && e.imagenes!==undefined?window.atob(e.imagenes[0]):undefined, select:false};
+        		if(e.estado===0){
+        			newProductList.push(img);
+        		}
+        	});
+        	return newProductList;
+        },
+        loadProductForSave(){
+        	let productlistRequest = [];
+        	this.productList.forEach( e => {
+        		if(e.select){
+        			this.profuctDataList.forEach(p => {
+        				if(p.id===e.id){
+        					productlistRequest.push(p);
+            			}
+        			});
+        		}
+        	});
+        	return productlistRequest;
+        },
+        buildDate:function(dateOld) {
+            const separate = "-";
+            const formatT = "T";
+            const formatZ = "Z";
+            let day;
+            let month;
+            let year;
+            let time = new Date().toLocaleTimeString();
+            if(dateOld === undefined){
+            	dateOld = new Date();
+        	}
+            if (dateOld instanceof Date) {
+                day = dateOld.getDate().toString();
+                month = (dateOld.getMonth() + 1).toString();
+                year = dateOld.getFullYear().toString();
+            } else {
+                let date = dateOld.split("-");
+                day = date[2];
+                month = date[1];
+                year = date[0];
+            }
+            return year.concat(separate).concat(month).concat(separate).concat(day).concat(formatT).concat(time).concat(formatZ);
+        },
+        setData(data){
+        	data.products.forEach(e => {
+        		this.productList.forEach)(p => {
+        			if(e.id === p.id){
+        				p.select = true;
+        			}
+        		});
+        	});
+			this.form.category: data.category,
+			this.form.description: data.description,
+			this.form.endDate: data.endDate,
+			this.form.startDate: data.initDate,
+			this.form.status: data.status,
         }
     }
 });

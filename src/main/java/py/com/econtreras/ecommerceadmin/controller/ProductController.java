@@ -1,22 +1,34 @@
 package py.com.econtreras.ecommerceadmin.controller;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import py.com.econtreras.api.beans.*;
+
+import py.com.econtreras.api.beans.ProductBean;
+import py.com.econtreras.api.beans.ProductRequestWrapper;
+import py.com.econtreras.api.beans.UserBean;
 import py.com.econtreras.ecommerceadmin.service.BrandService;
 import py.com.econtreras.ecommerceadmin.service.CategoryService;
 import py.com.econtreras.ecommerceadmin.service.ProductService;
+import py.com.econtreras.ecommerceadmin.service.UserService;
 import py.com.econtreras.ecommerceadmin.util.RequestConstant;
-
-import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping(RequestConstant.PURCHASE_PRODUCT)
@@ -29,6 +41,8 @@ public class ProductController {
     private BrandService brandService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public ModelAndView getProducts(){
@@ -49,6 +63,9 @@ public class ProductController {
         mav.addObject("product", product);
         mav.addObject("brands", brandService.findAll());
         mav.addObject("categories", categoryService.findAll());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        UserBean user = userService.findByUserName(currentPrincipalName);
         return mav;
     }
 
