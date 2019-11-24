@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
 <head>
   <div th:replace="fragments/head :: head"></div>
-  <link rel="stylesheet" th:href="@{/css/product/add-product.css}">
-  <!-- DataTables -->
-  <link rel="stylesheet" th:href="@{/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css}">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -18,7 +15,7 @@
       <section class="content-header">
         <h1>
           Bienvenido
-          <small>Administración de ecommerce</small>
+          <small>Administraci&oacute;n de ecommerce</small>
         </h1>
         <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -47,7 +44,5 @@
 </div>
 <!-- ./wrapper -->
 <div th:replace="fragments/head :: footer-js"></div>
-<script th:src="@{/bower_components/datatables.net/js/jquery.dataTables.min.js}"></script>
-<script th:src="@{/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
 </body>
 </html>

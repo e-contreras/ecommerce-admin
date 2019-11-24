@@ -19,7 +19,10 @@
         <java.version>1.8</java.version>
         <commons-collections4.version>4.1</commons-collections4.version>
         <org.xhtmlrenderer.version>9.1.4</org.xhtmlrenderer.version>
-        <org.apache.commons.version>3.7</org.apache.commons.version>        
+        <org.apache.commons.version>3.7</org.apache.commons.version>
+        <jackson.version>2.9.8</jackson.version>
+        <vue.version>2.6.10</vue.version>
+        <thymeleaf-extras.version>3.0.4.RELEASE</thymeleaf-extras.version>
     </properties>
 
     <dependencies>
@@ -82,7 +85,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.8</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -104,7 +107,7 @@
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-java8time</artifactId>
-            <version>3.0.1.RELEASE</version>
+            <version>${thymeleaf-extras.version}</version>
         </dependency>
         <dependency>
             <groupId>py.com.econtreras</groupId>
@@ -115,7 +118,7 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>vue</artifactId>
-            <version>2.6.10</version>
+            <version>${vue.version}</version>
         </dependency>
 
     </dependencies>
