@@ -90,7 +90,8 @@ var vmExchange = new Vue({
         	    description: formData.description,
         	    endDate: this.buildDate(formData.endDate),
         	    initDate: this.buildDate(formData.startDate),
-        	    status: formData.status,
+                status: formData.status,
+                id:this.id,
         	    products: this.loadProductForSave()
             };
             console.log('putRequest: ', putRequest);

@@ -47,8 +47,11 @@ public class RequestConstant {
     /**
      * Nota de Débito
      */
-    public static final String PURCHASE_DEBIT_NOTE            = "/purchase/debit-note";
-    public static final String DEBIT_NOTE_MAIN_PATH_RESOURCE  = "purchase/debit_note/debit-note-index";
+    public static final String PURCHASE_DEBIT_NOTE                    = "/purchase/debit-note";
+    public static final String DEBIT_NOTE_MAIN_PATH_RESOURCE          = "purchase/debit_note/debit-note-index";
+    public static final String PURCHASE_DEBIT_NOTE_FORM_NEW           = "/form-new";
+    public static final String PURCHASE_DEBIT_NOTE_FORM_EDIT          = "/form-edit/{id}";
+    public static final String PURCHASE_DEBIT_NOTE_FORM_PATH_RESOURCE = "purchase/debit_note/debit-note-form";
     
     /**
      * Libro de Compras

@@ -1,16 +1,15 @@
-var list =[{cod:1,provider:"3 V - INGENIERIA S.A.",ruc:"80019709-7",comment:"Cualqiera", reception_date:"12/10/20018 08:59"},
-    {cod:2,provider:"4 HERMANOS S.R.L",ruc:"80075055-1", comment:"Ninguna", reception_date:"12/10/20018 08:59"}]
-
 var vmDebitNote = new Vue({
     el:'#debit-note-index',
     data:{
-        listDebitNote:list,
+        listDebitNote:[],
         valuePages: [],
         itemPerPages: 10,
-        currentPage: 1
+        currentPage: 1,
+        idNoteDebit:0,
+        modalMessage:""
     },
     created(){
-        this.filterItems();
+        this.getDebits();
     },
     computed: {
         getLength() {
@@ -49,6 +48,57 @@ var vmDebitNote = new Vue({
                     }
                 }
             }
+        },
+        getDebits() {
+            let uri = "http://localhost:8080/debit_note";
+            $.ajax({
+                url: uri,
+                headers: {
+                    'Accept': 'application/json',
+                    'Access-Control-Allow-Origin': 'http://localhost:8081',
+                    'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
+                    'Access-Control-Allow-Credentials': 'true',
+                    'Access-Control-Allow-Headers': 'X-PINGOTHER'
+                },
+                success: function (data) {
+                    if(data!==undefined){
+                        this.listDebitNote = data;
+                        this.filterItems();
+                    }else{
+                        this.listDebitNote.push({comentario: "string",id: 0,num_doc_relacionado: "string",num_documento: "string",remitente: 0});
+                        this.filterItems();
+                    }
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
+        },
+        toEdit(id) {
+            window.location = "./debit-note/form-edit/" + id;
+        },
+
+        setIdRemove(debitData) {
+            this.modalMessage = "este registro";
+            this.idNoteDebit = debitData.id;
+        },
+
+        remove() {
+            let uri = "http://localhost:8080/debit_note/" + this.idNoteDebit;
+            $.ajax({
+                type: 'DELETE',
+                url: uri,
+                success: function (res) {
+                    if(res){
+                        window.setTimeout(function () {
+                            window.location.href = "./debit-note";
+                        }, 1000);
+                    }
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
         }
     }
 });

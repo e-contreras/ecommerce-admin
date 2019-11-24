@@ -1,14 +1,13 @@
-var vmCreditForm = new Vue({
-	el:'#credit-note-form',
-	data :{
-        form:{
-            comentario: "",
-            destinatario: 0,
-            fecEmision: undefined,
-            numDocRelacionado: "",
-            timbrado: undefined
-        },
-        id: document.getElementById("credit-note-data").value === "" ? 0 : document.getElementById("credit-note-data").value,
+var vmDebitForm = new Vue({
+	el:'#debit-note-form',
+	data:{
+		form:{
+			comentario: "",
+			numDocRelacionado: "",
+			numDocumento: "",
+			remitente: 0
+		},
+		id: document.getElementById("debit-note-data").value === "" ? 0 : document.getElementById("debit-note-data").value,
         mode: document.getElementById("mode-form").value !== null && document.getElementById("mode-form").value !== undefined ? document.getElementById('mode-form').value : ""
 	},
 	created() {
@@ -26,7 +25,7 @@ var vmCreditForm = new Vue({
             }
         },
         callServiceById() {
-            let uri = "http://localhost:8080/credit_note/" + this.id;
+            let uri = "http://localhost:8080/debit_note/" + this.id;
             $.ajax({
                 url: uri,
                 headers: {
@@ -43,28 +42,27 @@ var vmCreditForm = new Vue({
                     console.log("error", data);
                 }.bind(this)
             });
-        },
-        editMode() {
+		},
+		editMode() {
             let formData = this.form;
             let putRequest = {
         		comentario: formData.comentario,
-                destinatario: parseInt(formData.destinatario),
-                fec_emision: this.buildDate(formData.fecEmision),
+                num_documento: formData.numDocumento,
                 num_doc_relacionado: formData.numDocRelacionado,
                 id:parseInt(this.id),
-                timbrado: parseInt(formData.timbrado)
+                remitente: parseInt(formData.remitente)
             };
             console.log('putRequest: ', putRequest);
             $.ajax({
                 type: "PUT",
-                url: "http://localhost:8080/credit_note",
-                contentType: "application/json",
+                url: "http://localhost:8080/debit_note",
+                contentType: "application/json;charset=utf-8",
                 headers: {
                     accept: 'application/json',
                 },
                 data: putRequest,
                 success: function (data) {
-                    window.location.href = "../credit-note";
+                    window.location.href = "../debit-note";
                 }.bind(this),
                 error: function (data) {
                     console.log("error", data);
@@ -75,15 +73,14 @@ var vmCreditForm = new Vue({
             let formData = this.form; 
             let postRequest = {
         		comentario: formData.comentario,
-                destinatario: parseInt(formData.destinatario),
-                fec_emision: this.buildDate(formData.fecEmision),
+                num_documento: formData.numDocumento,
                 num_doc_relacionado: formData.numDocRelacionado,
-                timbrado: parseInt(formData.timbrado)
+                remitente: parseInt(formData.remitente)
             };
             console.log('postRequest: ', postRequest);
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/credit_note",
+                url: "http://localhost:8080/debit_note",
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 crossDomain: 'true',
@@ -93,20 +90,19 @@ var vmCreditForm = new Vue({
                 data: JSON.stringify(postRequest),
                 success: function (data) {
                     console.log(data);
-                    window.location.href = "../credit-note";
+                    window.location.href = "../debit-note";
                 }.bind(this),
                 error: function (data) {
                     console.log("error", data);
                 }.bind(this)
             });
         },
-        setModelForm(data){
+		setModelForm(data){
 			this.form.comentario = data.comentario;
-			this.form.destinatario = data.destinatario;
-			this.form.fecEmision = data.fec_emision;
 			this.form.numDocRelacionado = data.num_doc_relacionado;
-            this.form.timbrado = data.timbrado;
-            this.id = data.id;
+			this.form.numDocumento = data.numDocumento;
+			this.form.remitente = data.remitente;
+			this.id = data.id;
         },
         buildDate:function(dateOld) {
             const separate = "-";
@@ -131,6 +127,5 @@ var vmCreditForm = new Vue({
             }
             return year.concat(separate).concat(month).concat(separate).concat(day).concat(formatT).concat(time).concat(formatZ);
         }
-    	
-    }
+	}
 });

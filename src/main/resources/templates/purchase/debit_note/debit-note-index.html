@@ -15,29 +15,27 @@
         <div class="table-responsive">
 
             <div class="box-header" style="float: right;">
-                <a th:href="@{/purchase/products/form}" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</a>
+                <a th:href="@{/purchase/debit-note/form-new}" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</a>
             </div>
             <table id="credit-note-table" class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Cod</th>
-                        <th>Proveedor</th>
-                        <th>RUC</th>
+                        <th>N&uacute;mero de documento</th>
+                        <th>Nro. doc. relacionado</th>
+                        <th>Remitente</th>
                         <th>Comentario</th>
-                        <th>Fecha de recepci&oacute;n</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(debitNote, index) in valuePages" :key="index">
-                        <td>{{debitNote.cod}}</td>
-                        <td>{{debitNote.provider}}</td>
-                        <td>{{debitNote.ruc}}</td>
+                        <td>{{debitNote.num_documento}}</td>
+                        <td>{{debitNote.num_doc_relacionado}}</td>
+                        <td>{{debitNote.remitente}}</td>
                         <td>{{debitNote.comment}}</td>
-                        <td>{{debitNote.reception_date}}</td>
                         <td>
-                            <button class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
-                            <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                            <button @click="toEdit(debitNote.id)" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
+                            <button @click="setIdRemove(debitNote)" data-toggle="modal" data-target="#modal-confirmation" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -52,6 +50,7 @@
                 </div>
             </div>
         </div>
+        <template th:replace="modal/modal"></template>
     </div>
     <script th:src="@{/js/purchase/debit_note/debit-note-index.js}"></script>
 </html>
