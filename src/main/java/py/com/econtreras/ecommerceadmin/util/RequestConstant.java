@@ -38,8 +38,11 @@ public class RequestConstant {
     /**
      * Nota de Crédito
      */
-    public static final String PURCHASE_CREDIT_NOTE           = "/purchase/credit-note";
-    public static final String CREDIT_NOTE_MAIN_PATH_RESOURCE = "purchase/credit_note/credit-note-index";
+    public static final String PURCHASE_CREDIT_NOTE                    = "/purchase/credit-note";
+    public static final String CREDIT_NOTE_MAIN_PATH_RESOURCE          = "purchase/credit_note/credit-note-index";
+    public static final String PURCHASE_CREDIT_NOTE_FORM_NEW           = "/form-new";
+    public static final String PURCHASE_CREDIT_NOTE_FORM_EDIT          = "/form-edit/{id}";
+    public static final String PURCHASE_CREDIT_NOTE_FORM_PATH_RESOURCE = "purchase/credit_note/credit-note-form";
     
     /**
      * Nota de Débito

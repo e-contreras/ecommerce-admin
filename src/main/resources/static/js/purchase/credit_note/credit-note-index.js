@@ -7,10 +7,12 @@ var vmCreditNote = new Vue({
         listCreditNote:list,
         valuePages: [],
         itemPerPages: 10,
-        currentPage: 1
+        currentPage: 1,
+        modalMessage:"",
+        idNoteCredit:0
     },
     created(){
-        this.filterItems();
+    	this.getCredits();
     },
     computed: {
         getLength() {
@@ -44,11 +46,55 @@ var vmCreditNote = new Vue({
             this.valuePages = [];
             for (var index = indexFrom; index < indexTo; index++) {
                 if (index < this.getLength) {
-                    if (this.listCreditNote[index] != undefined) {
+                    if (this.listCreditNote[index] !== undefined) {
                         this.valuePages.push(this.listCreditNote[index]);
                     }
                 }
             }
-        }
+        },
+        getCredits(){
+        	let uri = "http://localhost:8080/credit_note";
+        	$.ajax({
+                url: uri,
+                headers: {
+                    'Accept': 'application/json',
+                    'Access-Control-Allow-Origin': 'http://localhost:8081',
+                    'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
+                    'Access-Control-Allow-Credentials': 'true',
+                    'Access-Control-Allow-Headers': 'X-PINGOTHER'
+                },
+                success: function (data) {
+                    this.listCreditNote = data;
+                    this.filterItems();
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
+        },
+        toEdit(id){
+            window.location = "./credit-note/form-edit/" + id;
+        },
+        
+        setIdRemove(noteData) {
+            this.idNoteCredit = noteData.id;
+            this.modalMessage = "a este destinatario";
+        },
+        
+        remove() {
+            let uri = "http://localhost:8080/credit_note/" + this.idNoteCredit;
+            $.ajax({
+                type: 'DELETE',
+                url: uri,
+                success: function (res) {
+                    window.setTimeout(function () {
+                        window.location.href = "./credit-note";
+                    }, 1000);
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
+        },
     }
 });

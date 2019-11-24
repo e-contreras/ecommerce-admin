@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import py.com.econtreras.ecommerceadmin.service.PdfGenerator;
@@ -36,10 +37,26 @@ public class CreditNoteController {
     }
 
     @GetMapping("/pdf")
-    public ResponseEntity generatePDF(final HttpServletRequest request, final HttpServletResponse response) throws DocumentException {
+    public ResponseEntity<?> generatePDF(final HttpServletRequest request, final HttpServletResponse response) throws DocumentException {
         ByteArrayOutputStream byteArrayOutputStreamPDF = pdfGenerator.createPdf("purchase/credit_note/credit-note-pdf", null, request, response);
         ByteArrayResource inputStreamResourcePDF = new ByteArrayResource(byteArrayOutputStreamPDF.toByteArray());
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + System.currentTimeMillis()).contentType(MediaType.APPLICATION_PDF)
                 .contentLength(inputStreamResourcePDF.contentLength()).body(inputStreamResourcePDF);
+    }
+    
+    @GetMapping(RequestConstant.PURCHASE_CREDIT_NOTE_FORM_NEW)
+    public ModelAndView getFormViewCreditNote(){
+        ModelAndView mav = new ModelAndView("general");
+        mav.addObject("piece", RequestConstant.PURCHASE_CREDIT_NOTE_FORM_PATH_RESOURCE);
+        return mav;
+    }
+    
+    @GetMapping(RequestConstant.PURCHASE_CREDIT_NOTE_FORM_EDIT)
+    public ModelAndView getCreditNoteEdit(@PathVariable("id")Integer id){
+        ModelAndView mav = new ModelAndView("general");
+        mav.addObject("piece", RequestConstant.PURCHASE_CREDIT_NOTE_FORM_PATH_RESOURCE);
+        mav.addObject("is", id);
+        mav.addObject("mode", "edit");
+        return mav;
     }
 }

@@ -110,6 +110,6 @@ var vmExchange = new Vue({
                     console.log("error", data);
                 }.bind(this)
             });
-        },
+        }
     }
 });
