@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+    <div class="table-responsive" style="background-image:url(img/image-background-3.jpg);">
+        <div class="">
+            <div style="text-align: center; color: #fff"><h2>NUESTROS SERVICIOS</h2></div>
+            <div style="text-align: center; color: #fff"><h2>¿QUE OFRECEMOS?</h2></div>
+            <div style="display: inline-flex;padding-top: 4em;padding-bottom: 9em;" class="col-md-12">
+                <span class="col-md-2 row"></span>
+                <div class="col-md-3" style="text-align: -webkit-center;">
+                    <a th:href="@{/purchase/products}" class="hexagono">
+                        <span class="hexagono-content">
+                            <i class="fa fa-product-hunt" aria-hidden="true" style="font-size: 5em"></i>
+                        </span>
+                    </a>
+                    <div style="padding-top: 3em;color: #fff">PRODUCTOS</div>
+                </div>
+                <div class="col-md-3" style="text-align: -webkit-center;">
+                    <a th:href="@{/purchase/provider}" class="hexagono">
+                        <span class="hexagono-content">
+                            <i class="fa fa-users" aria-hidden="true" style="font-size: 5em"></i>
+                        </span>
+                    </a>
+                    <div style="padding-top: 3em; color: #fff">PROVEEDORES</div>
+                </div>
+                <div class="col-md-3" style="text-align: -webkit-center;">
+                    <a th:href="@{/purchase/credit-note}" class="hexagono">
+                        <span class="hexagono-content">
+                            <i class="fa fa-credit-card" aria-hidden="true" style="font-size: 5em;"></i>
+                        </span>
+                    </a>
+                    <div style="padding-top: 3em; color: #fff">CR&Eacute;DITO</div>
+                </div>
+            </div>
+            <div style="text-align: center; color: #fff"><h2>PRESUPUESTO TIENDA ONLINE</h2></div>
+            <div style="text-align: center; color: #fff"><h2>SOLOCITA UN PRESUPUEST A TU MEDIDA</h2></div>
+        </div>
+    </div>
 </html>
