@@ -1,18 +1,15 @@
-var list =[{cod:1,provider:"3 V - INGENIERIA S.A.",ruc:"80019709-7",comment:"Cualqiera", reception_date:"12/10/20018 08:59"},
-    {cod:2,provider:"4 HERMANOS S.R.L",ruc:"80075055-1", comment:"Ninguna", reception_date:"12/10/20018 08:59"}]
-
 var vmCreditNote = new Vue({
-    el:'#credit-note-index',
-    data:{
-        listCreditNote:list,
+    el: '#credit-note-index',
+    data: {
+        listCreditNote: [],
         valuePages: [],
         itemPerPages: 10,
         currentPage: 1,
-        modalMessage:"",
-        idNoteCredit:0
+        modalMessage: "",
+        idNoteCredit: 0
     },
-    created(){
-    	this.getCredits();
+    created() {
+        this.getCredits();
     },
     computed: {
         getLength() {
@@ -52,9 +49,9 @@ var vmCreditNote = new Vue({
                 }
             }
         },
-        getCredits(){
-        	let uri = "http://localhost:8080/credit_note";
-        	$.ajax({
+        getCredits() {
+            let uri = "http://localhost:8080/credit_note";
+            $.ajax({
                 url: uri,
                 headers: {
                     'Accept': 'application/json',
@@ -64,23 +61,28 @@ var vmCreditNote = new Vue({
                     'Access-Control-Allow-Headers': 'X-PINGOTHER'
                 },
                 success: function (data) {
-                    this.listCreditNote = data;
-                    this.filterItems();
+                    if(data!==undefined){
+                        this.listCreditNote = data;
+                        this.filterItems();
+                    }else{
+                        this.listCreditNote.push({comentario: "string",destinatario: 0,fec_emision: "2019-11-23T23:31:22.341Z",id: 0,num_doc_relacionado: "string",timbrado: 0});
+                        this.filterItems();
+                    }
                 }.bind(this),
                 error: function (data) {
                     console.log("error", data);
                 }.bind(this)
             });
         },
-        toEdit(id){
+        toEdit(id) {
             window.location = "./credit-note/form-edit/" + id;
         },
-        
+
         setIdRemove(noteData) {
             this.idNoteCredit = noteData.id;
             this.modalMessage = "a este destinatario";
         },
-        
+
         remove() {
             let uri = "http://localhost:8080/credit_note/" + this.idNoteCredit;
             $.ajax({

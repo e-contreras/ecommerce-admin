@@ -8,15 +8,13 @@ var vmCreditForm = new Vue({
             numDocRelacionado: "",
             timbrado: undefined
         },
-        id: document.getElementById("exchange-data").value === "" ? 0 : document.getElementById("exchange-data").value,
+        id: document.getElementById("credit-note-data").value === "" ? 0 : document.getElementById("credit-note-data").value,
         mode: document.getElementById("mode-form").value !== null && document.getElementById("mode-form").value !== undefined ? document.getElementById('mode-form').value : ""
 	},
 	created() {
         if (this.mode === "edit") {
             this.callServiceById();
         }
-        this.getProductList();
-        this.getCategory();
     },
     methods : {
 
@@ -35,7 +33,6 @@ var vmCreditForm = new Vue({
                     'Accept': 'application/json',
                     'Access-Control-Allow-Origin': 'http://localhost:8081',
                     'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
-                    'Access-Control-Request-Method': 'GET',
                     'Access-Control-Allow-Credentials': 'true',
                     'Access-Control-Allow-Headers': 'X-PINGOTHER'
                 },
@@ -51,10 +48,10 @@ var vmCreditForm = new Vue({
             let formData = this.form;
             let putRequest = {
         		comentario: formData.comentario,
-                destinatario: formData.destinatario,
+                destinatario: parseInt(formData.destinatario),
                 fec_emision: this.buildDate(formData.fecEmision),
                 num_doc_relacionado: formData.numDocRelacionado,
-                timbrado: formData.timbrado
+                timbrado: parseInt(formData.timbrado)
             };
             console.log('putRequest: ', putRequest);
             $.ajax({
@@ -66,7 +63,6 @@ var vmCreditForm = new Vue({
                 },
                 data: putRequest,
                 success: function (data) {
-                	this.setData(data);
                     window.location.href = "../credit-note";
                 }.bind(this),
                 error: function (data) {
@@ -78,10 +74,10 @@ var vmCreditForm = new Vue({
             let formData = this.form; 
             let postRequest = {
         		comentario: formData.comentario,
-                destinatario: formData.destinatario,
+                destinatario: parseInt(formData.destinatario),
                 fec_emision: this.buildDate(formData.fecEmision),
                 num_doc_relacionado: formData.numDocRelacionado,
-                timbrado: formData.timbrado
+                timbrado: parseInt(formData.timbrado)
             };
             console.log('postRequest: ', postRequest);
             $.ajax({
@@ -103,7 +99,7 @@ var vmCreditForm = new Vue({
                 }.bind(this)
             });
         },
-        setData(data){
+        setModelForm(data){
 			this.form.comentario = data.comentario;
 			this.form.destinatario = data.destinatario;
 			this.form.fecEmision = data.fec_emision;

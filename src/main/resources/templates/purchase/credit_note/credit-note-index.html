@@ -20,24 +20,22 @@
             <table id="credit-note-table" class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Cod</th>
-                        <th>Proveedor</th>
-                        <th>RUC</th>
+                        <th>Timbrado</th>
+                        <th>Nro. doc. relacionado</th>
+                        <th>Fecha emicio&oacute;n</th>
                         <th>Comentario</th>
-                        <th>Fecha de recepci&oacute;n</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(creditNote, index) in valuePages" :key="index">
-                        <td>{{creditNote.cod}}</td>
-                        <td>{{creditNote.provider}}</td>
-                        <td>{{creditNote.ruc}}</td>
-                        <td>{{creditNote.comment}}</td>
-                        <td>{{creditNote.reception_date}}</td>
+                        <td>{{creditNote.timbrado}}</td>
+                        <td>{{creditNote.num_doc_relacionado}}</td>
+                        <td>{{creditNote.fec_emision}}</td>
+                        <td>{{creditNote.comentario}}</td>
                         <td>
-                            <button class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
-                            <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                            <button @click="toEdit(creditNote.id)" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
+                            <button @click="setIdRemove(creditNote)" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-confirmation"><i class="fa fa-trash"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -52,6 +50,7 @@
                 </div>
             </div>
         </div>
+        <template th:replace="modal/modal"></template>
     </div>
     <script th:src="@{/js/purchase/credit_note/credit-note-index.js}"></script>
 </html>
