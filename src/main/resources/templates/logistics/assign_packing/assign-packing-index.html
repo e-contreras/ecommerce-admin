@@ -54,7 +54,7 @@
                                     <span class="col-form-label">Personal de deposito: </span>
                                 </div>
                                 <div class="form-group mx-sm-3 mb-2">
-                                    <select class="form-control">
+                                    <select class="form-control" v-model="driverCurrent">
                                         <option :value="-1" v-text="'--CHOFERES--'"></option>
                                         <option v-for="(driver, index) in driverList" :key="index" :value="driver.id" v-text="driver.name+' '+driver.lastName"></option>
                                     </select>
@@ -65,7 +65,7 @@
                                     <span class="col-form-label">Vehiculos:</span>
                                 </div>
                                 <div class="form-group mx-sm-3 mb-2" style="padding-left:4.6em;">
-                                    <select class="form-control">
+                                    <select class="form-control" v-model="vehicle">
                                         <option :value="-1" v-text="'--VEHICULOS--'"></option>
                                         <option v-for="(vehicle, index) in vehiclesList" :key="index" :value="vehicle.id" v-text="vehicle.brand+' '+vehicle.model"></option>
                                     </select>
@@ -76,7 +76,15 @@
                                     <span>Fecha: </span>
                                 </div>
                                 <div class="form-group mx-sm-3 mb-2">
-                                    <input type="date" class="form-control" id="date-assign" style="margin-left:6.2em;"/>
+                                    <input v-model="createDate" type="date" class="form-control" id="date-assign" style="margin-left:6.2em;"/>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top:.7em;">
+                                <div class="form-group mb-2">
+                                    <span>Comentario</span>
+                                </div>
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <textarea v-model="comment" class="form-control" placeholder="Un comentario" style="margin-left:4em;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +110,7 @@
                     </tbody>
                 </table>
                 <div class="">
-                    <span style="padding-top:1em;float: right;"><button class="btn btn-primary">Asignar <i class="fa fa-share"></i></button></span>
+                    <span style="padding-top:1em;float: right;"><button @click.prevent="assingClick(assing)" class="btn btn-primary">Asignar <i class="fa fa-share"></i></button></span>
                 </div>
             </div> 
             <div>
@@ -115,7 +123,6 @@
                 </div>
             </div>
         </div>
-        <template th:replace="modal/modal"></template>
     </div>
     <script th:src="@{/js/logistics/assign_packing/assign-packing-index.js}"></script>
 </html>

@@ -7,8 +7,10 @@ var vmAssignPacking = new Vue({
         vehiclesList:[],
         itemPerPages: 3,
         currentPage: 1,
-        modalMessage: "",
-        idAssingPacking: 0
+        driverCurrent: -1,
+        vehicle: -1,
+        createDate:undefined,
+        comment:""
 
     },
     created() {
@@ -130,9 +132,64 @@ var vmAssignPacking = new Vue({
             }
             return year.concat(separate).concat(month).concat(separate).concat(day).concat(space).concat(time);
         },
+        assingClick(data) {
+            console.log('postRequest: ', data);
+            let postRequest = {
+                asignation: this.comment,
+                creationDate: this.buildDate(this.createDate),
+                driver: this.driverCurrent,
+                solicitude: data.id,
+                status: 1,
+                vehicle: this.vehicle,
+                wareHousePersonal: data.cliente.id,
+                warehouse: 1
+            };
+            console.log('postRequest: ', postRequest);
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/transfer",
+                contentType: "application/json;charset=utf-8",
+                dataType:"json",
+                crossDomain: true,
+                headers: {
+                    Accept: 'application/json',
+                },
+                data: JSON.stringify(postRequest),
+                success: function (data) {
+                    console.log(data);
+                    window.location.href = "../assign-packing";
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
+        },
+        buildDate:function(dateOld) {
+            const separate = "-";
+            const formatT = "T";
+            const formatZ = "Z";
+            let day;
+            let month;
+            let year;
+            let time = new Date().toLocaleTimeString();
+            if(dateOld === undefined){
+            	dateOld = new Date();
+        	}
+            if (dateOld instanceof Date) {
+                day = dateOld.getDate().toString();
+                month = (dateOld.getMonth() + 1).toString();
+                year = dateOld.getFullYear().toString();
+            } else {
+                let date = dateOld.split("-");
+                day = date[2];
+                month = date[1];
+                year = date[0];
+            }
+            return year.concat(separate).concat(month).concat(separate).concat(day).concat(formatT).concat(time).concat(formatZ);
+        },
 
         remove() {
-            let uri = "http://localhost:8080/solicitude/" + this.idAssingPacking;
+            let uri = "http://localhost:8080/transfer/" + this.idAssingPacking;
             $.ajax({
                 type: 'DELETE',
                 url: uri,
