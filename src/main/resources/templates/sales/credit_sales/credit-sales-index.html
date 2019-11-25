@@ -30,13 +30,13 @@
                 </thead>
                 <tbody>
                     <tr v-for="(creditSales, index) in valuePages" :key="index">
-                        <td>{{creditSales.cod}}</td>
-                        <td>{{creditSales.client}}</td>
-                        <td>{{creditSales.ruc}}</td>
-                        <td>{{creditSales.comment}}</td>
-                        <td>{{creditSales.reception_date}}</td>
+                        <td>{{creditSales.id}}</td>
+                        <td>{{creditSales.destinatario.name + " " + creditSales.destinatario.lastName}}</td>
+                        <td>{{creditSales.num_doc_relacionado}}</td>
+                        <td>{{creditSales.comentario}}</td>
+                        <td>{{creditSales.fec_emision}}</td>
                         <td>
-                            <button class="btn btn-xs btn-info" v-on:click="generatePDF(creditSales.cod)"><i class="fa fa-print"></i></button>
+                            <button class="btn btn-xs btn-info" v-on:click="generatePDF(creditSales.id)"><i class="fa fa-print"></i></button>
                             <button class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
                             <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                         </td>

@@ -26,9 +26,6 @@ import py.com.econtreras.ecommerceadmin.util.RequestConstant;
 @PreAuthorize("hasAuthority('compras')")
 public class CreditNoteController {
     
-    @Autowired
-    private PdfGenerator pdfGenerator;
-
     @GetMapping
     public ModelAndView getCreditNoteView() {
         ModelAndView mav = new ModelAndView("general");
@@ -36,14 +33,6 @@ public class CreditNoteController {
         return mav;
     }
 
-    @GetMapping("/pdf")
-    public ResponseEntity<?> generatePDF(final HttpServletRequest request, final HttpServletResponse response) throws DocumentException {
-        ByteArrayOutputStream byteArrayOutputStreamPDF = pdfGenerator.createPdf("purchase/credit_note/credit-note-pdf", null, request, response);
-        ByteArrayResource inputStreamResourcePDF = new ByteArrayResource(byteArrayOutputStreamPDF.toByteArray());
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + System.currentTimeMillis()).contentType(MediaType.APPLICATION_PDF)
-                .contentLength(inputStreamResourcePDF.contentLength()).body(inputStreamResourcePDF);
-    }
-    
     @GetMapping(RequestConstant.PURCHASE_CREDIT_NOTE_FORM_NEW)
     public ModelAndView getFormViewCreditNote(){
         ModelAndView mav = new ModelAndView("general");

@@ -13,12 +13,12 @@
                 <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px; width: 700px">
                     <p style="margin: 0px"><strong>ECONTRERAS ECOMMERCE WEB</strong></p>
                     <p style="margin: 0px"><strong>RUC:</strong> 1111111-7</p>
+                    <p style="margin: 0px"><strong>TIMBRADO: </strong><span th:text="${credit_note.ringing.ringing}"></span></p>
                     <p style="margin: 0px">Mcal. López 4001 c/ Sacramento</p>
                 </div>
                 <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px; width: 700px">
-                    <p style="margin: 0px"><strong>A:</strong> Alejandra Silva</p>
-                    <p style="margin: 0px"><strong>RUC:</strong> 1111111-7</p>
-                    <p style="margin: 0px"><strong>Dirección: </strong>Mcal. López 123 c/ Concepción</p>
+                    <p style="margin: 0px"><strong>A:</strong> <span th:text="${credit_note.destinatario.name + ' ' +  credit_note.destinatario.lastName}"></span></p>
+                    <p style="margin: 0px"><strong>RUC:</strong><span th:text="${credit_note.relatedDocument}"></span></p>
                 </div>
                 <div class="col-md-12" style="width: 700px">
                     <table class="table" style="width: 700px">
@@ -31,17 +31,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Ventilador calotec</td>
-                                <td>5000</td>
-                                <td>50</td>
-                                <td>250000</td>
+                            <tr th:each="detail : ${details}">
+                                <td th:text="${detail.concept}"></td>
+                                <td th:text="${#numbers.formatDecimal(detail.amount, 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
+                                <td th:text="${detail.quantity}"></td>
+                                <td th:text="${#numbers.formatDecimal(detail.amount * detail.quantity, 1, 'DEFAULT', 2, 'DEFAULT')}">250000</td>
                             </tr>
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th scope="row" colspan="3">TOTAL</th>
-                                <td>21000</td>
+                                <td th:text="${#numbers.formatDecimal(total, 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
                             </tr>
                         </tfoot>
                     </table>

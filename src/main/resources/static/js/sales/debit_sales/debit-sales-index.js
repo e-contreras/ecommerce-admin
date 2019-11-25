@@ -1,16 +1,13 @@
-var list =[{cod:1,client:"BALA",ruc:"80019709-7",comment:"Cualqiera", reception_date:"12/10/20018 08:59"},
-    {cod:2,client:"ELVIO",ruc:"80075055-1", comment:"Ninguna", reception_date:"12/10/20018 08:59"}]
-
 var vmDebitSales = new Vue({
     el:'#debit-sales-index',
     data:{
-        listDebitSales:list,
+        listDebitSales: [],
         valuePages: [],
         itemPerPages: 10,
         currentPage: 1
     },
     created(){
-        this.filterItems();
+        this.getDebitSales();
     },
     computed: {
         getLength() {
@@ -49,6 +46,27 @@ var vmDebitSales = new Vue({
                     }
                 }
             }
-        }
+        },
+        getDebitSales() {
+            $.ajax({
+                url: "http://localhost:8080/debit_note",
+                cache: false,
+                headers: {
+                    'Accept': 'application/json',
+                },
+                success: function (data) {
+                    this.listDebitSales = data;
+                    console.log(data);
+                    this.filterItems();
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
+        },
+        
+        generatePDF(id) {
+            window.open("http://localhost:8081/sales/debit-note/pdf/" + id, "Nota de crédito", "fullscreen=yes");
+        }        
     }
 });

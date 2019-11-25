@@ -24,18 +24,19 @@
                         <th>Cliente</th>
                         <th>RUC</th>
                         <th>Comentario</th>
-                        <th>Fecha de recepci&oacute;n</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(debitSales, index) in valuePages" :key="index">
-                        <td>{{debitSales.cod}}</td>
-                        <td>{{debitSales.client}}</td>
-                        <td>{{debitSales.ruc}}</td>
-                        <td>{{debitSales.comment}}</td>
-                        <td>{{debitSales.reception_date}}</td>
+                        
+                        <td>{{debitSales.id}}</td>
+                        <td>{{debitSales.remitente.name + " " + debitSales.remitente.lastName}}</td>
+                        <td>{{debitSales.num_doc_relacionado}}</td>
+                        <td>{{debitSales.comentario}}</td>
+                        
                         <td>
+                            <button class="btn btn-xs btn-info" v-on:click="generatePDF(debitSales.id)"><i class="fa fa-print"></i></button>
                             <button class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button>
                             <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                         </td>

@@ -1,16 +1,13 @@
-var list = [{cod: 1, client: "BALA", ruc: "80019709-7", comment: "Cualquiera", reception_date: "12/10/20018 08:59"},
-    {cod: 2, client: "ELVIO", ruc: "80075055-1", comment: "Ninguno", reception_date: "12/10/20018 08:59"}]
-
 var vmCreditSales = new Vue({
     el: '#credit-sales-index',
     data: {
-        listCreditSales: list,
+        listCreditSales: [],
         valuePages: [],
         itemPerPages: 10,
         currentPage: 1
     },
     created() {
-        this.filterItems();
+        this.getCreditSales();
     },
     computed: {
         getLength() {
@@ -48,7 +45,26 @@ var vmCreditSales = new Vue({
                     }
                 }
             }
+            console.log(this.valuePages);
         },
+        getCreditSales() {
+            $.ajax({
+                url: "http://localhost:8080/credit_note",
+                cache: false,
+                headers: {
+                    'Accept': 'application/json',
+                },
+                success: function (data) {
+                    this.listCreditSales = data;
+                    console.log(data);
+                    this.filterItems();
+                }.bind(this),
+                error: function (data) {
+                    console.log("error", data);
+                }.bind(this)
+            });
+        },
+        
         generatePDF(id) {
             window.open("http://localhost:8081/sales/credit-note/pdf/" + id, "Nota de crédito", "fullscreen=yes");
         }

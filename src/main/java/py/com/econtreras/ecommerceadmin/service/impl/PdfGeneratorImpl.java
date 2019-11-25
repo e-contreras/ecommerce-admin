@@ -33,6 +33,7 @@ public class PdfGeneratorImpl implements PdfGenerator {
     @Override
     public ByteArrayOutputStream createPdf(String templateName, Map map, HttpServletRequest request, HttpServletResponse response) throws DocumentException {
         Context ctx = new Context();
+        ctx.setVariables(map);
         String processedHtml = templateEngine.process(templateName, ctx);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
