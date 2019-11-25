@@ -111,17 +111,18 @@ var vmProductForm = new Vue({
                 model: formData.model,
                 pictures: this.toListBytes(),
                 product_name: formData.product,
-                user_id: 1
+                user_id: 1,
+                impuesto: formData.iva
             };
             console.log('putRequest: ', putRequest);
             $.ajax({
                 type: "PUT",
                 url: "http://localhost:8080/products",
-                contentType: "application/json",
+                contentType: "application/json; charset=utf-8",
                 headers: {
                     accept: 'application/json',
                 },
-                data: putRequest,
+                data: JSON.stringify(putRequest),
                 success: function (data) {
                     console.log(data);
                     window.location.href = "../products";
